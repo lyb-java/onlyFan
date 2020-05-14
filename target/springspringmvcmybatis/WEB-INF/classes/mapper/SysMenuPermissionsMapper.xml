@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.SysMenuPermissionsMapper" >
+  <resultMap id="BaseResultMap" type="com.zm.entity.SysMenuPermissions" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="menu_name" property="menuName" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="icon" property="icon" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+    <result column="superior_id" property="superiorId" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="BIGINT" />
+    <result column="update_time" property="updateTime" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, menu_name, url, icon, state, superior_id, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from zm_sys_menu_permissions
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from zm_sys_menu_permissions
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zm.entity.SysMenuPermissions" >
+    insert into zm_sys_menu_permissions (id, menu_name, url, 
+      icon, state, superior_id, 
+      create_time, update_time)
+    values (#{id,jdbcType=INTEGER}, #{menuName,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
+      #{icon,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, #{superiorId,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=BIGINT}, #{updateTime,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zm.entity.SysMenuPermissions" >
+    insert into zm_sys_menu_permissions
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="menuName != null" >
+        menu_name,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="icon != null" >
+        icon,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="superiorId != null" >
+        superior_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="menuName != null" >
+        #{menuName,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null" >
+        #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="superiorId != null" >
+        #{superiorId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zm.entity.SysMenuPermissions" >
+    update zm_sys_menu_permissions
+    <set >
+      <if test="menuName != null" >
+        menu_name = #{menuName,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null" >
+        icon = #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="superiorId != null" >
+        superior_id = #{superiorId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zm.entity.SysMenuPermissions" >
+    update zm_sys_menu_permissions
+    set menu_name = #{menuName,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      icon = #{icon,jdbcType=VARCHAR},
+      state = #{state,jdbcType=VARCHAR},
+      superior_id = #{superiorId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=BIGINT},
+      update_time = #{updateTime,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
