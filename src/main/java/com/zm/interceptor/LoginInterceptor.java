@@ -17,7 +17,7 @@ import java.util.List;
  * 登陆拦截器
  *
  * @author liyangbin
- * @date 2019-1-13
+ * @date 2020-1-13
  */
 public class LoginInterceptor implements HandlerInterceptor {
     private static final Logger logger = org.apache.log4j.Logger.getLogger(LoginInterceptor.class);

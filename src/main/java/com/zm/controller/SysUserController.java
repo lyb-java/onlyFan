@@ -2,18 +2,20 @@ package com.zm.controller;
 
 import com.zm.common.*;
 import com.zm.dto.UserAddReqDto;
+import com.zm.dto.UserSeachRspDto;
 import com.zm.entity.SysUser;
 import com.zm.service.SysUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * 系统用户接口
@@ -24,6 +26,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/index")
 public class SysUserController {
+    private final  Logger logger = LoggerFactory.getLogger(SysUserController.class);
     @Autowired
     SysUserService sysUserService;
     /**
@@ -66,6 +69,26 @@ public class SysUserController {
         } catch (Exception e) {
             e.printStackTrace();
             return new ZMResult(e);
+        }
+
+    }
+    /**
+     * 查询后台用户列表
+     *
+     * @param
+     * @return ZMResult
+     */
+    @ApiOperation(value = "查询后台用户列表")
+    @PostMapping("/getuserall")
+    public ZMResult<List<UserSeachRspDto>> getUserAllPage() {
+        try {
+            ZMResult<List<UserSeachRspDto>>  zmResult = new ZMResult<>(Message.SUCCESS_CODE);
+            List<UserSeachRspDto> rspDtos = sysUserService.getUserAllPage();
+            zmResult.setData(rspDtos);
+            return zmResult;
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            return new ZMResult<>(e);
         }
 
     }

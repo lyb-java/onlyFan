@@ -1,6 +1,7 @@
 package com.zm.service.impl;
 
 import com.zm.dto.UserAddReqDto;
+import com.zm.dto.UserSeachRspDto;
 import com.zm.entity.SysUser;
 import com.zm.mapper.SysUserMapper;
 import com.zm.service.SysUserService;
@@ -10,6 +11,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * 系统用户实现类
@@ -48,5 +51,10 @@ public class SysUserServiceImpl implements SysUserService {
 
         Integer result = sysUserMapper.insert(user);
         return result;
+    }
+
+    @Override
+    public List<UserSeachRspDto> getUserAllPage() throws Exception {
+        return null;
     }
 }

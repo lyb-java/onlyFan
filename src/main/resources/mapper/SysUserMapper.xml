@@ -11,7 +11,7 @@
     <result column="update_time" property="updateTime" jdbcType="BIGINT" />
   </resultMap>
   <sql id="Base_Column_List" >
-    u.id, u.account, u.password, u.user_name, u.is_enable, u.create_time, u.update_time
+    u.id, u.account, u.user_name, u.is_enable, u.create_time, u.update_time
   </sql>
   <select id="selectByUser" resultMap="BaseResultMap" parameterType="com.zm.entity.SysUser" >
     select

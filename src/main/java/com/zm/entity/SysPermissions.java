@@ -1,15 +1,36 @@
 package com.zm.entity;
 
-public class SysPermissions {
+import java.io.Serializable;
+
+/**
+ * 角色权限表(ZmSysPermissions)实体类
+ *
+ * @author makejava
+ * @since 2020-05-14 16:49:19
+ */
+public class SysPermissions implements Serializable {
+    private static final long serialVersionUID = 526248192201618940L;
+    /**
+    * 主键id
+    */
     private Integer id;
-
+    /**
+    * 角色id
+    */
     private Integer roleId;
-
+    /**
+    * 菜单编号
+    */
     private Integer menuId;
-
+    /**
+    * 创建时间
+    */
     private Long createTime;
-
+    /**
+    * 修改时间
+    */
     private Long updateTime;
+
 
     public Integer getId() {
         return id;
@@ -50,4 +71,5 @@ public class SysPermissions {
     public void setUpdateTime(Long updateTime) {
         this.updateTime = updateTime;
     }
+
 }

@@ -1,21 +1,48 @@
 package com.zm.entity;
 
-public class SysMenuPermissions {
+import java.io.Serializable;
+
+/**
+ * 菜单权限表(ZmSysMenuPermissions)实体类
+ *
+ * @author makejava
+ * @since 2020-05-14 16:49:19
+ */
+public class SysMenuPermissions implements Serializable {
+    private static final long serialVersionUID = -65426417811118816L;
+    /**
+    * 主键id
+    */
     private Integer id;
-
+    /**
+    * 菜单名称
+    */
     private String menuName;
-
+    /**
+    * 指向地址
+    */
     private String url;
-
+    /**
+    * 图标
+    */
     private String icon;
-
+    /**
+    * 是否启用（0否，1是）
+    */
     private String state;
-
+    /**
+    * 上级id
+    */
     private Integer superiorId;
-
+    /**
+    * 创建时间
+    */
     private Long createTime;
-
+    /**
+    * 修改时间
+    */
     private Long updateTime;
+
 
     public Integer getId() {
         return id;
@@ -30,7 +57,7 @@ public class SysMenuPermissions {
     }
 
     public void setMenuName(String menuName) {
-        this.menuName = menuName == null ? null : menuName.trim();
+        this.menuName = menuName;
     }
 
     public String getUrl() {
@@ -38,7 +65,7 @@ public class SysMenuPermissions {
     }
 
     public void setUrl(String url) {
-        this.url = url == null ? null : url.trim();
+        this.url = url;
     }
 
     public String getIcon() {
@@ -46,7 +73,7 @@ public class SysMenuPermissions {
     }
 
     public void setIcon(String icon) {
-        this.icon = icon == null ? null : icon.trim();
+        this.icon = icon;
     }
 
     public String getState() {
@@ -54,7 +81,7 @@ public class SysMenuPermissions {
     }
 
     public void setState(String state) {
-        this.state = state == null ? null : state.trim();
+        this.state = state;
     }
 
     public Integer getSuperiorId() {
@@ -80,4 +107,5 @@ public class SysMenuPermissions {
     public void setUpdateTime(Long updateTime) {
         this.updateTime = updateTime;
     }
+
 }
