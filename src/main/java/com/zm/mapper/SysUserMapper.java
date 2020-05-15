@@ -1,7 +1,11 @@
 package com.zm.mapper;
 
+import com.zm.dto.UserSeachReqDto;
+import com.zm.dto.UserSeachRspDto;
 import com.zm.entity.SysUser;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface SysUserMapper {
@@ -23,4 +27,11 @@ public interface SysUserMapper {
      * @throws Exception 异常处理
      */
     SysUser selectByUser(SysUser sysUser) throws Exception;
+    /***
+     * 查询单个用户
+     * @param reqDto 条件
+     * @return UserSeachRspDto  返回实体
+     * @throws Exception 异常处理
+     */
+    List<UserSeachRspDto> getUserAllPage(UserSeachReqDto reqDto) throws Exception;
 }

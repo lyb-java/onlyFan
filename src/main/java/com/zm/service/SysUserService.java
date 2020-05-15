@@ -1,6 +1,9 @@
 package com.zm.service;
 
+import com.github.pagehelper.PageInfo;
+import com.zm.dto.PageViewDto;
 import com.zm.dto.UserAddReqDto;
+import com.zm.dto.UserSeachReqDto;
 import com.zm.dto.UserSeachRspDto;
 import com.zm.entity.SysUser;
 
@@ -33,5 +36,5 @@ public interface SysUserService {
      * @return List<UserSeachRspDto>
      * @throws Exception
      */
-    List<UserSeachRspDto> getUserAllPage() throws Exception;
+    PageInfo<UserSeachRspDto> getUserAllPage(PageViewDto<UserSeachReqDto> pageViewDto) throws Exception;
 }

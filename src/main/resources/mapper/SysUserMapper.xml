@@ -9,9 +9,10 @@
     <result column="is_enable" property="isEnable" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="BIGINT" />
     <result column="update_time" property="updateTime" jdbcType="BIGINT" />
+    <result column="is_delete" property="isDelete" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    u.id, u.account, u.user_name, u.is_enable, u.create_time, u.update_time
+    u.id, u.account, u.user_name,password, u.is_enable, u.create_time, u.update_time,is_delete
   </sql>
   <select id="selectByUser" resultMap="BaseResultMap" parameterType="com.zm.entity.SysUser" >
     select
@@ -21,24 +22,26 @@
     LEFT JOIN zm_sys_role AS r ON r.id = ur.role_id
     where u.user_name = #{userName,jdbcType=VARCHAR}
     and u.password = #{password,jdbcType=VARCHAR}
+    and u.is_delete = 0
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from zm_sys_user
     where id = #{id,jdbcType=INTEGER}
+    and is_delete = 0
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from zm_sys_user
+  <update id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    update  zm_sys_user set is_delete = 1
     where id = #{id,jdbcType=INTEGER}
-  </delete>
+  </update>
   <insert id="insert" parameterType="com.zm.entity.SysUser" >
     insert into zm_sys_user (id, account, password, 
       user_name, is_enable, create_time, 
-      update_time)
+      update_time,is_delete)
     values (#{id,jdbcType=INTEGER}, #{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{userName,jdbcType=VARCHAR}, #{isEnable,jdbcType=VARCHAR}, #{createTime,jdbcType=BIGINT}, 
-      #{updateTime,jdbcType=BIGINT})
+      #{updateTime,jdbcType=BIGINT},#{isDelete,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.zm.entity.SysUser" >
     insert into zm_sys_user
@@ -64,6 +67,9 @@
       <if test="updateTime != null" >
         update_time,
       </if>
+      <if test="isDelete != null" >
+        is_delete,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -87,6 +93,10 @@
       <if test="updateTime != null" >
         #{updateTime,jdbcType=BIGINT},
       </if>
+      <if test="isDelete != null" >
+        #{isDelete,jdbcType=VARCHAR},
+      </if>
+
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.zm.entity.SysUser" >
@@ -110,6 +120,9 @@
       <if test="updateTime != null" >
         update_time = #{updateTime,jdbcType=BIGINT},
       </if>
+      <if test="isDelete != null" >
+        is_delete = #{isDelete,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -120,7 +133,22 @@
       user_name = #{userName,jdbcType=VARCHAR},
       is_enable = #{isEnable,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=BIGINT},
-      update_time = #{updateTime,jdbcType=BIGINT}
+      update_time = #{updateTime,jdbcType=BIGINT},
+      is_delete = #{isDelete,jdbcType=VARCHAR},
     where id = #{id,jdbcType=INTEGER}
   </update>
+    <select id="getUserAllPage" resultMap="BaseResultMap">
+      select
+      <include refid="Base_Column_List" />,r.role_name roleName
+      from zm_sys_user u
+      LEFT JOIN zm_sys_user_role AS ur ON ur.user_id = u.id
+      LEFT JOIN zm_sys_role AS r ON r.id = ur.role_id
+      <where>
+        <if test="userName!=null and userName!=''">
+          u.user_name = #{userName,jdbcType=VARCHAR}
+        </if>
+        and u.is_delete = 0
+        and r.is_delete = 0
+      </where>
+    </select>
 </mapper>

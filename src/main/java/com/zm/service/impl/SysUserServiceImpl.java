@@ -1,6 +1,11 @@
 package com.zm.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.zm.dto.PageViewDto;
 import com.zm.dto.UserAddReqDto;
+import com.zm.dto.UserSeachReqDto;
 import com.zm.dto.UserSeachRspDto;
 import com.zm.entity.SysUser;
 import com.zm.mapper.SysUserMapper;
@@ -54,7 +59,13 @@ public class SysUserServiceImpl implements SysUserService {
     }
 
     @Override
-    public List<UserSeachRspDto> getUserAllPage() throws Exception {
-        return null;
+    public PageInfo<UserSeachRspDto>  getUserAllPage(PageViewDto<UserSeachReqDto> pageViewDto) throws Exception {
+        //分页参数
+        Page<UserSeachRspDto> pageInfo = PageHelper.startPage(pageViewDto.getPageIndex(), pageViewDto.getPageSize());
+        //查询条件
+        UserSeachReqDto reqDto = pageViewDto.getCondition();
+        //查询列表数据
+        sysUserMapper.getUserAllPage(reqDto);
+        return pageInfo.toPageInfo();
     }
 }

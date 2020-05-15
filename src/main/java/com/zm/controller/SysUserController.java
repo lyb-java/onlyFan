@@ -1,8 +1,8 @@
 package com.zm.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.zm.common.*;
-import com.zm.dto.UserAddReqDto;
-import com.zm.dto.UserSeachRspDto;
+import com.zm.dto.*;
 import com.zm.entity.SysUser;
 import com.zm.service.SysUserService;
 import io.swagger.annotations.Api;
@@ -80,11 +80,12 @@ public class SysUserController {
      */
     @ApiOperation(value = "查询后台用户列表")
     @PostMapping("/getuserall")
-    public ZMResult<List<UserSeachRspDto>> getUserAllPage() {
+    public ZMResult<PageViewRspDto<List<UserSeachRspDto>>> getUserAllPage(PageViewDto<UserSeachReqDto> pageViewDto) {
         try {
-            ZMResult<List<UserSeachRspDto>>  zmResult = new ZMResult<>(Message.SUCCESS_CODE);
-            List<UserSeachRspDto> rspDtos = sysUserService.getUserAllPage();
-            zmResult.setData(rspDtos);
+            ZMResult<PageViewRspDto<List<UserSeachRspDto>>> zmResult = new ZMResult<>(Message.SUCCESS_CODE);
+            //获取分页数据
+            PageInfo<UserSeachRspDto> pageInfo = sysUserService.getUserAllPage(pageViewDto);
+            zmResult.setData(new PageViewRspDto<>(pageInfo.getList(), pageInfo.getTotal()));
             return zmResult;
         } catch (Exception e) {
             logger.error(e.getMessage());

@@ -38,7 +38,18 @@ public class SysUser implements Serializable {
     * 修改时间
     */
     private Long updateTime;
+    /**
+     * 是否删除（0否,1是）
+     */
+    private String isDelete;
 
+    public String getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(String isDelete) {
+        this.isDelete = isDelete;
+    }
 
     public Integer getId() {
         return id;
