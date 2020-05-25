@@ -35,7 +35,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         String uri = request.getRequestURI();
         logger.info("==========LoginInterceptor: "+uri);
 
-        String token = request.getHeader("authToken");
+        String token = request.getHeader("Authorization");
         if(uri.startsWith(request.getContextPath())){
             uri = uri.substring(request.getContextPath().length(), uri.length());
         }
@@ -60,8 +60,9 @@ public class LoginInterceptor implements HandlerInterceptor {
                 return true;
             }
         }
-        response.setCharacterEncoding("GBK");
-        response.getWriter().write(JSONObject.toJSONString(new ZMResult(Message.VERITY_FAIL)));
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json; charset=UTF-8");
+        response.getWriter().write(JSONObject.toJSONString(new ZMResult<>(Message.VERITY_FAIL)));
         return false;
     }
 

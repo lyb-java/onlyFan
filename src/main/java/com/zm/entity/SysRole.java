@@ -19,6 +19,10 @@ public class SysRole implements Serializable {
     */
     private String roleName;
     /**
+     * 角色权限代码
+     */
+    private String access;
+    /**
     * 修改时间
     */
     private Long updateTime;
@@ -31,6 +35,14 @@ public class SysRole implements Serializable {
      * 是否删除（0否,1是）
      */
     private String isDelete;
+
+    public String getAccess() {
+        return access;
+    }
+
+    public void setAccess(String access) {
+        this.access = access;
+    }
 
     public String getIsDelete() {
         return isDelete;

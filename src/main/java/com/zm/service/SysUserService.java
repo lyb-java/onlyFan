@@ -22,7 +22,7 @@ public interface SysUserService {
      * @return String token
      * @throws Exception
      */
-    String login(SysUser sysUser) throws Exception ;
+    UserSeachRspDto login(SysUser sysUser) throws Exception ;
     /**
      * 新增系统用户接口
      * @param reqDto  新增用户实体dto

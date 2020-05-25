@@ -26,7 +26,7 @@ public interface SysUserMapper {
      * @return SysUser  返回实体
      * @throws Exception 异常处理
      */
-    SysUser selectByUser(SysUser sysUser) throws Exception;
+    UserSeachRspDto selectByUser(SysUser sysUser) throws Exception;
     /***
      * 查询单个用户
      * @param reqDto 条件

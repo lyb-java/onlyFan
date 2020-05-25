@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -27,7 +28,7 @@ import java.util.List;
 @RequestMapping("/index")
 public class SysUserController {
     private final  Logger logger = LoggerFactory.getLogger(SysUserController.class);
-    @Autowired
+    @Resource
     SysUserService sysUserService;
     /**
      * 用户登陆操作
@@ -38,18 +39,18 @@ public class SysUserController {
     @ApiOperation(value = "登录入口")
     @ApiImplicitParam(name = "SysUser", value = "用户对象", required = true)
     @PostMapping("/login")
-    public ZMResult login(@RequestBody SysUser user) {
+    public ZMResult<UserSeachRspDto> login(@RequestBody SysUser user) {
         try {
             // 账号或者密码不能为空否则就提示错误信息
             if (StringUtils.isBlank(user.getUserName()) || StringUtils.isBlank(user.getPassword())) {
                throw new Exception("用户名或密码不能为空！");
             }
-            String token = sysUserService.login(user);
+            UserSeachRspDto rspDto = sysUserService.login(user);
 
-            return new ZMResult(Message.SUCCESS_CODE,token);
+            return new ZMResult<>(Message.SUCCESS_CODE,rspDto);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ZMResult(e);
+            return new ZMResult<>(e);
         }
 
     }

@@ -39,4 +39,30 @@
         <!-- 设置扫描mapper.xml文件 -->
         <property name="mapperLocations" value="classpath:mapper/*.xml"/>
     </bean>
+<!--  corsFilter 跨域过滤器处理  -->
+    <!-- 这个配置需要放到Spring的配置文件中，不能放到SpringMVC的配置文件，因为SpringMVC的加载是基于Servlet，它是晚于Filter的 -->
+    <bean id="corsFilter" class="org.springframework.web.filter.CorsFilter">
+        <constructor-arg name="configSource">
+            <bean class="org.springframework.web.cors.UrlBasedCorsConfigurationSource">
+                <property name="corsConfigurations">
+                    <map>
+                        <entry key="/**">
+                            <bean class="org.springframework.web.cors.CorsConfiguration">
+                                <property name="allowCredentials" value="true"/>
+                                <property name="allowedMethods">
+                                    <list>
+                                        <value>GET</value>
+                                        <value>POST</value>
+                                        <value>HEAD</value>
+                                    </list>
+                                </property>
+                                <property name="allowedHeaders" value="*"/>
+                                <property name="allowedOrigins" value="*"/>
+                            </bean>
+                        </entry>
+                    </map>
+                </property>
+            </bean>
+        </constructor-arg>
+    </bean>
 </beans>

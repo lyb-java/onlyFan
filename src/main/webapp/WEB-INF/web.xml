@@ -26,6 +26,19 @@
         <filter-name>encoding</filter-name>
         <url-pattern>*</url-pattern>
     </filter-mapping>
+
+    <filter>
+        <filter-name>ZMCorsFilter</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+        <init-param>
+            <param-name>targetBeanName</param-name>
+            <param-value>corsFilter</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>ZMCorsFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
     <!--配置springmvc-->
     <servlet>
         <servlet-name>springmvc</servlet-name>

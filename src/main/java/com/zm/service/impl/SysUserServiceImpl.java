@@ -3,6 +3,7 @@ package com.zm.service.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.zm.common.Constant;
 import com.zm.dto.PageViewDto;
 import com.zm.dto.UserAddReqDto;
 import com.zm.dto.UserSeachReqDto;
@@ -29,19 +30,22 @@ public class SysUserServiceImpl implements SysUserService {
     @Autowired
     SysUserMapper sysUserMapper;
     @Override
-    public String login(SysUser sysUser) throws Exception {
-        SysUser user = sysUserMapper.selectByUser(sysUser);
+    public UserSeachRspDto login(SysUser sysUser) throws Exception {
+        UserSeachRspDto user = sysUserMapper.selectByUser(sysUser);
         if(user==null){
             throw new Exception("账号不存在，请联系管理员李霞！");
         }
-        if("0".equals(sysUser.getIsEnable())){
+//        是否有效（0否，1是）
+        if(Constant.IS_ENABLE_NO.equals(sysUser.getIsEnable())){
             throw new Exception("账号已失效，请联系管理员李霞！");
         }
         //生成token
         String token="";
         //这里调用创建JWT信息的方法
         token = JwtUtil.createToken(user.getId());
-        return token;
+        //token 用户唯一标识
+        user.setToken(token);
+        return user;
     }
 
     @Override

@@ -20,6 +20,28 @@ public class UserSeachRspDto extends SysUser {
     @ApiModelProperty(value = "角色名称")
     private String roleName;
 
+    @ApiModelProperty(value = "角色权限代码")
+    private String access;
+
+    @ApiModelProperty(value = "token-用户唯一标识")
+    private String token;
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getAccess() {
+        return access;
+    }
+
+    public void setAccess(String access) {
+        this.access = access;
+    }
+
     public String getRoleName() {
         return roleName;
     }

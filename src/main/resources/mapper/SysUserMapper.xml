@@ -11,12 +11,16 @@
     <result column="update_time" property="updateTime" jdbcType="BIGINT" />
     <result column="is_delete" property="isDelete" jdbcType="VARCHAR" />
   </resultMap>
+  <resultMap id="userResultMap"  extends="BaseResultMap"  type="com.zm.dto.UserSeachRspDto" >
+    <result column="role_name" property="roleName" jdbcType="VARCHAR" />
+    <result column="access" property="access" jdbcType="VARCHAR" />
+  </resultMap>
   <sql id="Base_Column_List" >
     u.id, u.account, u.user_name,password, u.is_enable, u.create_time, u.update_time,is_delete
   </sql>
   <select id="selectByUser" resultMap="BaseResultMap" parameterType="com.zm.entity.SysUser" >
     select
-    <include refid="Base_Column_List" />
+    <include refid="Base_Column_List" />,,r.role_name,r.access
     from zm_sys_user u
     LEFT JOIN zm_sys_user_role AS ur ON ur.user_id = u.id
     LEFT JOIN zm_sys_role AS r ON r.id = ur.role_id
@@ -137,15 +141,24 @@
       is_delete = #{isDelete,jdbcType=VARCHAR},
     where id = #{id,jdbcType=INTEGER}
   </update>
-    <select id="getUserAllPage" resultMap="BaseResultMap">
+    <select id="getUserAllPage" resultMap="userResultMap">
       select
-      <include refid="Base_Column_List" />,r.role_name roleName
+      <include refid="Base_Column_List" />,r.role_name roleName,r.access access
       from zm_sys_user u
       LEFT JOIN zm_sys_user_role AS ur ON ur.user_id = u.id
       LEFT JOIN zm_sys_role AS r ON r.id = ur.role_id
       <where>
         <if test="userName!=null and userName!=''">
-          u.user_name = #{userName,jdbcType=VARCHAR}
+          u.user_name  LIKE CONCAT('%',#{userName},'%')
+        </if>
+        <if test="account!=null and account!=''">
+          u.account  LIKE CONCAT('%',#{account},'%')
+        </if>
+        <if test="roleName!=null and roleName!=''">
+          r.role_name LIKE CONCAT('%',#{roleName},'%')
+        </if>
+        <if test="isEnable!=null and isEnable!=''">
+          u.is_enable = #{isEnable}
         </if>
         and u.is_delete = 0
         and r.is_delete = 0
