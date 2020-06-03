@@ -1,6 +1,8 @@
 
 package com.zm.common;
 
+import com.zm.exception.BusinessException;
+import com.zm.exception.ValidateException;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
@@ -19,32 +21,32 @@ public class ZMResult<T> {
 	public ZMResult() {
 	}
 
-	public ZMResult(String code, String msg) {
-		this.code = code;
-		this.msg = msg;
+	public ZMResult(Message constant){
+		this.code = constant.getRetcode();
+		this.msg = constant.getRetmsg();
 	}
-	public ZMResult(String code) {
-		this.code = code;
-		if(Message.SUCCESS_CODE.equals(code)){
-			this.msg = "操作成功！";
-		}else if(Message.FAIL.equals(code)){
-			this.msg = "操作失败！";
-		}else if(Message.VERITY_FAIL.equals(code)){
-			this.msg = "认证失败！";
-		}
+	public ZMResult(Message message, T data) {
+		this.code = message.getRetcode();
+		this.msg = message.getRetmsg();
+		this.data = data;
+
 	}
 	public ZMResult(String code, String msg, T data) {
 		this.code = code;
 		this.msg = msg;
 		this.data = data;
 	}
-	public ZMResult(String code, T data) {
-		this.code = code;
-		this.data = data;
-	}
 	public ZMResult(Exception e) {
-		this.code = Message.SYSTEM_ERROR;
+		this.code = Message.OPERATION_FAILURE.getRetcode();
 		this.msg = e.getMessage();
+		if (e instanceof BusinessException) {
+			this.code = "500000";
+		} else if (e instanceof ValidateException) {
+
+		} else {
+			this.code = Message.FAILURE.getRetcode();
+			this.msg = Message.FAILURE.getRetmsg();
+		}
 	}
 	public String getCode() {
 		return code;

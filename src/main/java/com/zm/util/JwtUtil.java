@@ -7,11 +7,16 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
+/**
+ *  token 处理
+ * @author liyangbin
+ * @date  2020-6-1
+ */
 public class JwtUtil {
     /**过期时间*/
-    private static final long EXPIRE_TIME = 60 * 60 * 1000;
+    private static final long EXPIRE_TIME = 60 * 60 * 24 * 1000;
     /**私钥*/
-    private static final String TOKEN_SECRET = "lixia_key";
+    private static final String TOKEN_SECRET = "LIXIA_TOKEN_KEY";
 
     /**
      * 生成token，60分钟过期

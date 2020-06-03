@@ -11,11 +11,11 @@ import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import javax.validation.ValidationException;
 import java.util.List;
 
 /**
@@ -43,11 +43,11 @@ public class SysUserController {
         try {
             // 账号或者密码不能为空否则就提示错误信息
             if (StringUtils.isBlank(user.getUserName()) || StringUtils.isBlank(user.getPassword())) {
-               throw new Exception("用户名或密码不能为空！");
+               throw new ValidationException("用户名或密码不能为空！");
             }
             UserSeachRspDto rspDto = sysUserService.login(user);
 
-            return new ZMResult<>(Message.SUCCESS_CODE,rspDto);
+            return new ZMResult<>(Message.SUCCESS,rspDto);
         } catch (Exception e) {
             e.printStackTrace();
             return new ZMResult<>(e);
@@ -66,7 +66,7 @@ public class SysUserController {
     public ZMResult addUser(@Valid @RequestBody UserAddReqDto reqDto) {
         try {
             Integer result = sysUserService.addUser(reqDto);
-            return new ZMResult(Message.SUCCESS_CODE,result);
+            return new ZMResult(Message.SUCCESS,result);
         } catch (Exception e) {
             e.printStackTrace();
             return new ZMResult(e);
@@ -81,9 +81,9 @@ public class SysUserController {
      */
     @ApiOperation(value = "查询后台用户列表")
     @PostMapping("/getuserall")
-    public ZMResult<PageViewRspDto<List<UserSeachRspDto>>> getUserAllPage(PageViewDto<UserSeachReqDto> pageViewDto) {
+    public ZMResult<PageViewRspDto<List<UserSeachRspDto>>> getUserAllPage(@RequestBody  PageViewDto<UserSeachReqDto> pageViewDto) {
         try {
-            ZMResult<PageViewRspDto<List<UserSeachRspDto>>> zmResult = new ZMResult<>(Message.SUCCESS_CODE);
+            ZMResult<PageViewRspDto<List<UserSeachRspDto>>> zmResult = new ZMResult<>(Message.SUCCESS);
             //获取分页数据
             PageInfo<UserSeachRspDto> pageInfo = sysUserService.getUserAllPage(pageViewDto);
             zmResult.setData(new PageViewRspDto<>(pageInfo.getList(), pageInfo.getTotal()));

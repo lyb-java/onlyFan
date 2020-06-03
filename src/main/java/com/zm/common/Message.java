@@ -7,22 +7,37 @@ package com.zm.common;
  * @description
  * @date 2020-1-14下午3:27:01
  */
-public class Message {
-	/**
-	 * 成功
-	 */
-	public static final String SUCCESS_CODE = "0";
-	/**
-	 * 失败
-	 */
-	public static final String FAIL = "1";
+public enum Message {
 
-	/**
-	 * 认证失败
-	 */
-	public static final String VERITY_FAIL = "3";
-	/**
-	 * 系统错误
-	 */
-	public static final String SYSTEM_ERROR = "4";
+	SUCCESS("000000", "操作成功"),
+
+	OPERATION_FAILURE("000001", "操作失败"),
+
+	FAILURE("000002", "未知异常"),
+
+	AUTHENTICATION_FAILURE("000003", "认证失败");
+
+
+	private String retcode;
+
+	private String retmsg;
+
+	private Message(String retcode, String retmsg) {
+		this.retcode = retcode;
+		this.retmsg = retmsg;
+	}
+
+	@Override
+	public String toString() {
+		return this.retcode + "_" + this.retmsg;
+	}
+
+	public String getRetcode() {
+		return retcode;
+	}
+
+
+	public String getRetmsg() {
+		return retmsg;
+	}
 }

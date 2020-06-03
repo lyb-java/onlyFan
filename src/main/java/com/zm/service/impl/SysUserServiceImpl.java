@@ -13,11 +13,13 @@ import com.zm.mapper.SysUserMapper;
 import com.zm.service.SysUserService;
 import com.zm.util.DateUtils;
 import com.zm.util.JwtUtil;
+import com.zm.util.Md5Util;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.ValidationException;
 import java.util.List;
 
 /**
@@ -31,13 +33,15 @@ public class SysUserServiceImpl implements SysUserService {
     SysUserMapper sysUserMapper;
     @Override
     public UserSeachRspDto login(SysUser sysUser) throws Exception {
+        //md5加密
+        sysUser.setPassword(Md5Util.md5(sysUser.getPassword()));
         UserSeachRspDto user = sysUserMapper.selectByUser(sysUser);
         if(user==null){
-            throw new Exception("账号不存在，请联系管理员李霞！");
+            throw new ValidationException("账号不存在，请联系管理员李霞！");
         }
 //        是否有效（0否，1是）
         if(Constant.IS_ENABLE_NO.equals(sysUser.getIsEnable())){
-            throw new Exception("账号已失效，请联系管理员李霞！");
+            throw new ValidationException("账号已失效，请联系管理员李霞！");
         }
         //生成token
         String token="";
@@ -65,11 +69,9 @@ public class SysUserServiceImpl implements SysUserService {
     @Override
     public PageInfo<UserSeachRspDto>  getUserAllPage(PageViewDto<UserSeachReqDto> pageViewDto) throws Exception {
         //分页参数
-        Page<UserSeachRspDto> pageInfo = PageHelper.startPage(pageViewDto.getPageIndex(), pageViewDto.getPageSize());
-        //查询条件
-        UserSeachReqDto reqDto = pageViewDto.getCondition();
+        Page<UserSeachRspDto> page = PageHelper.startPage(pageViewDto.getPageIndex(), pageViewDto.getPageSize());
         //查询列表数据
-        sysUserMapper.getUserAllPage(reqDto);
-        return pageInfo.toPageInfo();
+        List<UserSeachRspDto> rspDtos = sysUserMapper.getUserAllPage(pageViewDto.getCondition());
+        return page.toPageInfo();
     }
 }

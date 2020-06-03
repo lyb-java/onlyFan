@@ -7,6 +7,7 @@ import com.zm.dto.UserSeachReqDto;
 import com.zm.dto.UserSeachRspDto;
 import com.zm.entity.SysUser;
 
+import javax.validation.ValidationException;
 import java.util.List;
 
 /**
@@ -22,14 +23,14 @@ public interface SysUserService {
      * @return String token
      * @throws Exception
      */
-    UserSeachRspDto login(SysUser sysUser) throws Exception ;
+    UserSeachRspDto login(SysUser sysUser) throws Exception, ValidationException;
     /**
      * 新增系统用户接口
      * @param reqDto  新增用户实体dto
      * @return Integer 影响行数
      * @throws Exception
      */
-    Integer addUser(UserAddReqDto reqDto) throws Exception;
+    Integer addUser(UserAddReqDto reqDto) throws Exception,ValidationException;
 
     /**
      * 新增系统用户接口

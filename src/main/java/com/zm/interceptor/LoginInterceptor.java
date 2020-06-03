@@ -37,7 +37,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 
         String token = request.getHeader("Authorization");
         if(uri.startsWith(request.getContextPath())){
-            uri = uri.substring(request.getContextPath().length(), uri.length());
+            uri = uri.substring(request.getContextPath().length());
         }
         //放行exceptUrls中配置的url
         for (String url:exceptUrls) {
@@ -60,9 +60,14 @@ public class LoginInterceptor implements HandlerInterceptor {
                 return true;
             }
         }
+        //token  不为空，解析校验，  直接可访问
+        if(token!=null && JwtUtil.verifyToken(token) > 0){
+            logger.info("==========LoginInterceptor===token校验失败:"+token);
+            return true;
+        }
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json; charset=UTF-8");
-        response.getWriter().write(JSONObject.toJSONString(new ZMResult<>(Message.VERITY_FAIL)));
+        response.getWriter().write(JSONObject.toJSONString(new ZMResult<>(Message.AUTHENTICATION_FAILURE)));
         return false;
     }
 
