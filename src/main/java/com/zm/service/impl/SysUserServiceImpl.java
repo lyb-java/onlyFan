@@ -72,6 +72,10 @@ public class SysUserServiceImpl implements SysUserService {
         Page<UserSeachRspDto> page = PageHelper.startPage(pageViewDto.getPageIndex(), pageViewDto.getPageSize());
         //查询列表数据
         List<UserSeachRspDto> rspDtos = sysUserMapper.getUserAllPage(pageViewDto.getCondition());
-        return page.toPageInfo();
+
+        PageInfo  pageInfo = page.toPageInfo();
+        pageInfo.setTotal(rspDtos.size());
+        pageInfo.setList(rspDtos);
+        return pageInfo;
     }
 }

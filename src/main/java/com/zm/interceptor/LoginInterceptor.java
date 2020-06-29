@@ -62,7 +62,6 @@ public class LoginInterceptor implements HandlerInterceptor {
         }
         //token  不为空，解析校验，  直接可访问
         if(token!=null && JwtUtil.verifyToken(token) > 0){
-            logger.info("==========LoginInterceptor===token校验失败:"+token);
             return true;
         }
         response.setCharacterEncoding("UTF-8");
