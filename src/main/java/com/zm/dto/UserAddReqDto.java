@@ -35,6 +35,18 @@ public class UserAddReqDto {
     @ApiModelProperty(value = "是否有效（0否，1是）")
     private String isEnable;
 
+    @NotNull(message = "角色id不能为空")
+    @ApiModelProperty(value = "角色编号")
+    private Integer roleId;
+
+    public Integer getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
+    }
+
     public String getAccount() {
         return account;
     }

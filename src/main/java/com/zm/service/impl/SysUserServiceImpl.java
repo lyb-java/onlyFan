@@ -9,16 +9,18 @@ import com.zm.dto.UserAddReqDto;
 import com.zm.dto.UserSeachReqDto;
 import com.zm.dto.UserSeachRspDto;
 import com.zm.entity.SysUser;
+import com.zm.entity.SysUserRole;
 import com.zm.mapper.SysUserMapper;
+import com.zm.mapper.SysUserRoleMapper;
 import com.zm.service.SysUserService;
 import com.zm.util.DateUtils;
 import com.zm.util.JwtUtil;
 import com.zm.util.Md5Util;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import javax.validation.ValidationException;
 import java.util.List;
 
@@ -29,8 +31,10 @@ import java.util.List;
  */
 @Service
 public class SysUserServiceImpl implements SysUserService {
-    @Autowired
+    @Resource
     SysUserMapper sysUserMapper;
+    @Resource
+    SysUserRoleMapper sysUserRoleMapper;
     @Override
     public UserSeachRspDto login(SysUser sysUser) throws Exception {
         //md5加密
@@ -54,15 +58,26 @@ public class SysUserServiceImpl implements SysUserService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Integer addUser(UserAddReqDto reqDto) {
+    public Integer addUser(UserAddReqDto reqDto) throws Exception {
+        Long time = DateUtils.getCurrentTimes();
         SysUser user = new SysUser();
         //复制相同字段 拷贝
         BeanUtils.copyProperties(reqDto,user);
         //设置创建时间，修改时间
-        user.setCreateTime(DateUtils.getCurrentTimes());
-        user.setUpdateTime(DateUtils.getCurrentTimes());
-
+        user.setCreateTime(time);
+        user.setUpdateTime(time);
+        //md5加密
+        user.setPassword(Md5Util.md5(user.getPassword()));
         Integer result = sysUserMapper.insert(user);
+        //系统角色
+        SysUserRole userRole = new SysUserRole();
+        userRole.setUserId(user.getId());
+        userRole.setRoleId(reqDto.getRoleId());
+        //设置创建时间，修改时间
+        userRole.setCreateTime(time);
+        userRole.setUpdateTime(time);
+
+        result += sysUserRoleMapper.insert(userRole);
         return result;
     }
 

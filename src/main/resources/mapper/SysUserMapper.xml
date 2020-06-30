@@ -40,7 +40,7 @@
     update  zm_sys_user set is_delete = 1
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <insert id="insert" parameterType="com.zm.entity.SysUser" >
+  <insert id="insert" parameterType="com.zm.entity.SysUser"  useGeneratedKeys="true" keyColumn="id">
     insert into zm_sys_user (id, account, password, 
       user_name, is_enable, create_time, 
       update_time,is_delete)
