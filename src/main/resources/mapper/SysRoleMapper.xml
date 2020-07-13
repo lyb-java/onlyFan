@@ -9,23 +9,33 @@
     <result column="create_time" property="createTime" jdbcType="BIGINT" />
     <result column="is_delete" property="isDelete" jdbcType="VARCHAR" />
   </resultMap>
+  <resultMap id="RoleRspDtoMap" type="com.zm.dto.RoleRspDto" extends="BaseResultMap"/>
   <sql id="Base_Column_List" >
     id, role_name, access,update_time, create_time,is_delete
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="getAllPage" resultMap="RoleRspDtoMap">
+    select
+    <include refid="Base_Column_List" />
+    from zm_sys_role
+    where is_delete = 0
+    <if test="roleName!=null and roleName != ''">
+      and role_name like  CONCAT('%',#{roleName},'%')
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="RoleRspDtoMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from zm_sys_role
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <update id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    <update id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     update zm_sys_role set is_delete = 1
     where id = #{id,jdbcType=INTEGER}
   </update>
   <insert id="insert" parameterType="com.zm.entity.SysRole" >
     insert into zm_sys_role (id, role_name,access, update_time,
       create_time,is_delete)
-    values (#{id,jdbcType=INTEGER},#{access,jdbcType=VARCHAR}, #{roleName,jdbcType=VARCHAR}, #{updateTime,jdbcType=BIGINT},
+    values (#{id,jdbcType=INTEGER},#{roleName,jdbcType=VARCHAR},#{access,jdbcType=VARCHAR} , #{updateTime,jdbcType=BIGINT},
       #{createTime,jdbcType=BIGINT},#{isDelete,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.zm.entity.SysRole" >

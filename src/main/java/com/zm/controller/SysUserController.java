@@ -23,7 +23,7 @@ import java.util.List;
  * @author liyangbin
  * @date 2019-1-13
  */
-@Api(tags = "系统登录-李杨彬")
+@Api(tags = "系统用户管理-李杨彬")
 @RestController
 @RequestMapping("/onlyfan/index")
 public class SysUserController {
@@ -63,13 +63,13 @@ public class SysUserController {
     @ApiOperation(value = "新增后台用户")
     @ApiImplicitParam(name = "UserAddReqDto", value = "用户添加实体", required = true)
     @PostMapping("/adduser")
-    public ZMResult addUser(@Valid @RequestBody UserAddReqDto reqDto) {
+    public ZMResult<Integer>  addUser(@Valid @RequestBody UserAddReqDto reqDto) {
         try {
             Integer result = sysUserService.addUser(reqDto);
-            return new ZMResult(Message.SUCCESS,result);
+            return new ZMResult<> (Message.SUCCESS,result);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ZMResult(e);
+            return new ZMResult<> (e);
         }
 
     }
@@ -102,7 +102,7 @@ public class SysUserController {
      */
     @ApiOperation(value = "查询后台用户详情")
     @PostMapping("/getusedetail")
-    public ZMResult<UserRspDto> getUserAllPage(@RequestParam("id") Integer id) {
+    public ZMResult<UserRspDto> getDetail(@RequestParam("id") Integer id) {
         try {
             ZMResult<UserRspDto> zmResult = new ZMResult<>(Message.SUCCESS);
             zmResult.setData(sysUserService.getUserDetail(id));

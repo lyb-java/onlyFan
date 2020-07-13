@@ -1,17 +1,24 @@
 package com.zm.mapper;
 
+import com.zm.dto.RoleReqDto;
+import com.zm.dto.RoleRspDto;
 import com.zm.entity.SysRole;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface SysRoleMapper {
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(@Param("id") Integer id);
 
     int insert(SysRole record);
 
     int insertSelective(SysRole record);
 
-    SysRole selectByPrimaryKey(Integer id);
+    RoleRspDto selectByPrimaryKey(@Param("id") Integer id);
 
     int updateByPrimaryKeySelective(SysRole record);
 
     int updateByPrimaryKey(SysRole record);
+
+    List<RoleRspDto> getAllPage(RoleReqDto condition);
 }
