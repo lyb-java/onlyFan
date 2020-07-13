@@ -1,5 +1,6 @@
 package com.zm.mapper;
 
+import com.zm.dto.UserRspDto;
 import com.zm.dto.UserSeachReqDto;
 import com.zm.dto.UserSeachRspDto;
 import com.zm.entity.SysUser;
@@ -8,15 +9,18 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * @author liyangbin
+ */
 @Repository
 public interface SysUserMapper {
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(@Param("id") Integer id);
 
     int insert(SysUser record);
 
     int insertSelective(SysUser record);
 
-    SysUser selectByPrimaryKey(Integer id);
+    UserRspDto selectByPrimaryKey(@Param("id") Integer id);
 
     int updateByPrimaryKeySelective(SysUser record);
 

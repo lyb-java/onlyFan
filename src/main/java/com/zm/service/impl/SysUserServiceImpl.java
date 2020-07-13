@@ -4,12 +4,11 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.zm.common.Constant;
-import com.zm.dto.PageViewDto;
-import com.zm.dto.UserAddReqDto;
-import com.zm.dto.UserSeachReqDto;
-import com.zm.dto.UserSeachRspDto;
+import com.zm.dto.*;
 import com.zm.entity.SysUser;
 import com.zm.entity.SysUserRole;
+import com.zm.exception.BusinessException;
+import com.zm.exception.ValidateException;
 import com.zm.mapper.SysUserMapper;
 import com.zm.mapper.SysUserRoleMapper;
 import com.zm.service.SysUserService;
@@ -21,8 +20,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import javax.validation.ValidationException;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 系统用户实现类
@@ -41,11 +40,11 @@ public class SysUserServiceImpl implements SysUserService {
         sysUser.setPassword(Md5Util.md5(sysUser.getPassword()));
         UserSeachRspDto user = sysUserMapper.selectByUser(sysUser);
         if(user==null){
-            throw new ValidationException("账号不存在，请联系管理员李霞！");
+            throw new ValidateException("账号或密码错误，请重试！");
         }
 //        是否有效（0否，1是）
         if(Constant.IS_ENABLE_NO.equals(sysUser.getIsEnable())){
-            throw new ValidationException("账号已失效，请联系管理员李霞！");
+            throw new ValidateException("账号已失效，请联系管理员李霞！");
         }
         //生成token
         String token="";
@@ -59,20 +58,25 @@ public class SysUserServiceImpl implements SysUserService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Integer addUser(UserAddReqDto reqDto) throws Exception {
-        Long time = DateUtils.getCurrentTimes();
         SysUser user = new SysUser();
         //复制相同字段 拷贝
         BeanUtils.copyProperties(reqDto,user);
+        //md5加密
+        user.setPassword(Md5Util.md5(user.getPassword()));
+        UserSeachRspDto rspDto = sysUserMapper.selectByUser(user);
+        if(Objects.nonNull(rspDto)){
+            throw new BusinessException("账号已存在，不可重复添加！");
+        }
+        Long time = DateUtils.getCurrentTimes();
         //设置创建时间，修改时间
         user.setCreateTime(time);
         user.setUpdateTime(time);
-        //md5加密
-        user.setPassword(Md5Util.md5(user.getPassword()));
+        user.setIsDelete("0");
         Integer result = sysUserMapper.insert(user);
         //系统角色
         SysUserRole userRole = new SysUserRole();
         userRole.setUserId(user.getId());
-        userRole.setRoleId(reqDto.getRoleId());
+        userRole.setRoleId(1);
         //设置创建时间，修改时间
         userRole.setCreateTime(time);
         userRole.setUpdateTime(time);
@@ -92,5 +96,20 @@ public class SysUserServiceImpl implements SysUserService {
         pageInfo.setTotal(rspDtos.size());
         pageInfo.setList(rspDtos);
         return pageInfo;
+    }
+
+    @Override
+    public UserRspDto getUserDetail(Integer id) throws Exception {
+        return sysUserMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public Integer editUser(UserReqDto reqDto) throws Exception {
+        return sysUserMapper.updateByPrimaryKeySelective(reqDto);
+    }
+
+    @Override
+    public Integer deleteUser(Integer id) throws Exception {
+        return sysUserMapper.deleteByPrimaryKey(id);
     }
 }

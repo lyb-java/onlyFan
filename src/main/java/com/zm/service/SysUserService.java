@@ -1,10 +1,7 @@
 package com.zm.service;
 
 import com.github.pagehelper.PageInfo;
-import com.zm.dto.PageViewDto;
-import com.zm.dto.UserAddReqDto;
-import com.zm.dto.UserSeachReqDto;
-import com.zm.dto.UserSeachRspDto;
+import com.zm.dto.*;
 import com.zm.entity.SysUser;
 
 import javax.validation.ValidationException;
@@ -23,14 +20,14 @@ public interface SysUserService {
      * @return String token
      * @throws Exception
      */
-    UserSeachRspDto login(SysUser sysUser) throws Exception, ValidationException;
+    UserSeachRspDto login(SysUser sysUser) throws Exception;
     /**
      * 新增系统用户接口
      * @param reqDto  新增用户实体dto
      * @return Integer 影响行数
      * @throws Exception
      */
-    Integer addUser(UserAddReqDto reqDto) throws Exception,ValidationException;
+    Integer addUser(UserAddReqDto reqDto) throws Exception;
 
     /**
      * 新增系统用户接口
@@ -38,4 +35,22 @@ public interface SysUserService {
      * @throws Exception
      */
     PageInfo<UserSeachRspDto> getUserAllPage(PageViewDto<UserSeachReqDto> pageViewDto) throws Exception;
+    /**
+     * 新增系统用户接口
+     * @return UserRspDto
+     * @throws Exception
+     */
+    UserRspDto getUserDetail(Integer id) throws Exception;
+    /**
+     * 编辑系统用户接口
+     * @return Integer
+     * @throws Exception
+     */
+    Integer editUser(UserReqDto reqDto) throws Exception;
+    /**
+     * 删除系统用户接口
+     * @return Integer
+     * @throws Exception
+     */
+    Integer deleteUser(Integer id) throws Exception;
 }

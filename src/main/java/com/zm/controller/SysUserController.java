@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.zm.common.*;
 import com.zm.dto.*;
 import com.zm.entity.SysUser;
+import com.zm.exception.ValidateException;
 import com.zm.service.SysUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
-import javax.validation.ValidationException;
 import java.util.List;
 
 /**
@@ -25,7 +25,7 @@ import java.util.List;
  */
 @Api(tags = "系统登录-李杨彬")
 @RestController
-@RequestMapping("/index")
+@RequestMapping("/onlyfan/index")
 public class SysUserController {
     private final  Logger logger = LoggerFactory.getLogger(SysUserController.class);
     @Resource
@@ -42,8 +42,8 @@ public class SysUserController {
     public ZMResult<UserSeachRspDto> login(@RequestBody SysUser user) {
         try {
             // 账号或者密码不能为空否则就提示错误信息
-            if (StringUtils.isBlank(user.getUserName()) || StringUtils.isBlank(user.getPassword())) {
-               throw new ValidationException("用户名或密码不能为空！");
+            if (StringUtils.isBlank(user.getAccount()) || StringUtils.isBlank(user.getPassword())) {
+               throw new ValidateException("账号或密码不能为空！");
             }
             UserSeachRspDto rspDto = sysUserService.login(user);
 
@@ -87,6 +87,63 @@ public class SysUserController {
             //获取分页数据
             PageInfo<UserSeachRspDto> pageInfo = sysUserService.getUserAllPage(pageViewDto);
             zmResult.setData(new PageViewRspDto<>(pageInfo.getList(), pageInfo.getTotal()));
+            return zmResult;
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            return new ZMResult<>(e);
+        }
+
+    }
+    /**
+     * 查询后台用户详情
+     *
+     * @param
+     * @return ZMResult
+     */
+    @ApiOperation(value = "查询后台用户详情")
+    @PostMapping("/getusedetail")
+    public ZMResult<UserRspDto> getUserAllPage(@RequestParam("id") Integer id) {
+        try {
+            ZMResult<UserRspDto> zmResult = new ZMResult<>(Message.SUCCESS);
+            zmResult.setData(sysUserService.getUserDetail(id));
+            return zmResult;
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            return new ZMResult<>(e);
+        }
+
+    }
+    /**
+     * 用户修改
+     *
+     * @param
+     * @return ZMResult
+     */
+    @ApiOperation(value = "用户修改")
+    @PostMapping("/edituser")
+    public ZMResult<Integer> editUser(@RequestBody UserReqDto reqDto) {
+        try {
+            ZMResult<Integer> zmResult = new ZMResult<>(Message.SUCCESS);
+            zmResult.setData(sysUserService.editUser(reqDto));
+            return zmResult;
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            return new ZMResult<>(e);
+        }
+
+    }
+    /**
+     * 用户删除
+     *
+     * @param
+     * @return ZMResult
+     */
+    @ApiOperation(value = "用户修改")
+    @PostMapping("/deluser")
+    public ZMResult<Integer> delUser(@RequestParam("id") Integer id) {
+        try {
+            ZMResult<Integer> zmResult = new ZMResult<>(Message.SUCCESS);
+            zmResult.setData(sysUserService.deleteUser(id));
             return zmResult;
         } catch (Exception e) {
             logger.error(e.getMessage());
