@@ -35,7 +35,7 @@
             <!-- 配置放行的请求 -->
             <property name="exceptUrls">
                 <list>
-                    <value>/index/login</value>
+                    <value>/onlyfan/index/login</value>
                     <value>/swagger</value>
                     <value>/v2</value>
                     <value>/webjars/springfox-swagger-ui</value>
