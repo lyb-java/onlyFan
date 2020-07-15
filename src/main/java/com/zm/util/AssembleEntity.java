@@ -13,7 +13,7 @@ public class AssembleEntity {
         //当前时间
         Long time = DateUtils.getCurrentTimes();
         BeanUtils.copyProperties(source,target);
-        targetClass.getMethod("setOpRoleName",Integer.class).invoke(target,userInfo.getRoleName());
+        targetClass.getMethod("setOpRoleName",String.class).invoke(target,userInfo.getRoleName());
         targetClass.getMethod("setOpUserId",Integer.class).invoke(target,userInfo.getId());
         targetClass.getMethod("setOpUserName",String.class).invoke(target,userInfo.getUserName());
         targetClass.getMethod("setCreateTime",Long.class).invoke(target, time);
