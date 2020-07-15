@@ -22,8 +22,9 @@
     from zm_class
     where id = #{id,jdbcType=INTEGER}
   </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from zm_class
+    update  zm_class set is_delete = 1
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.zm.entity.Class" >
@@ -139,4 +140,18 @@
       op_role_name = #{opRoleName,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="getAllPage" resultType="com.zm.entity.Class">
+    select
+    <include refid="Base_Column_List" />
+    from zm_class
+    <where>
+      and is_delete = 1
+      <if test="name!=null and name !=''">
+        and name like CONCAT('%',#{name},'%')
+      </if>
+      <if test="opUserName!=null and opUserName !=''">
+        and op_user_name like CONCAT('%',#{opUserName},'%')
+      </if>
+    </where>
+  </select>
 </mapper>

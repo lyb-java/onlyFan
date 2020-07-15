@@ -6,6 +6,7 @@ import com.zm.common.ZMResult;
 import com.zm.dto.*;
 import com.zm.entity.Achievement;
 import com.zm.service.AchievementService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -22,6 +23,7 @@ import java.util.List;
  * @author liyangbin
  * @since 2020-07-15 15:22:33
  */
+@Api(tags = "学生成绩管理-李杨彬")
 @RestController
 @RequestMapping("/onlyfan/achievement")
 public class AchievementController extends BaseController{

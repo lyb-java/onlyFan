@@ -12,7 +12,7 @@ import lombok.Data;
  * @Modified By:
  */
 @Data
-@ApiModel(value = "角色信息请求Dto")
+@ApiModel(value = "成绩信息表请求Dto")
 public class AchievementReqDto extends Achievement {
     /**
      * 考试开始时间
