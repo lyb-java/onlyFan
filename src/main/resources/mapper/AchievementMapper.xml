@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zm.mapper.AchievementMapper" >
+  <resultMap id="BaseResultMap" type="com.zm.entity.Achievement" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="student_id" property="studentId" jdbcType="INTEGER" />
+    <result column="student_name" property="studentName" jdbcType="VARCHAR" />
+    <result column="subject_name" property="subjectName" jdbcType="VARCHAR" />
+    <result column="points" property="points" jdbcType="DECIMAL" />
+    <result column="start_time" property="startTime" jdbcType="BIGINT" />
+    <result column="end_time" property="endTime" jdbcType="BIGINT" />
+    <result column="is_delete" property="isDelete" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="BIGINT" />
+    <result column="update_time" property="updateTime" jdbcType="BIGINT" />
+    <result column="op_user_id" property="opUserId" jdbcType="INTEGER" />
+    <result column="op_user_name" property="opUserName" jdbcType="VARCHAR" />
+    <result column="op_role_name" property="opRoleName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, student_id, student_name, subject_name, points, start_time, end_time, is_delete, 
+    create_time, update_time, op_user_id, op_user_name, op_role_name
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from zm_achievement
+    where id = #{id,jdbcType=INTEGER} and is_delete = 0
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    update zm_achievement set  is_delete = 1
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zm.entity.Achievement" >
+    insert into zm_achievement (id, student_id, student_name, 
+      subject_name, points, start_time, 
+      end_time, is_delete, create_time, 
+      update_time, op_user_id, op_user_name, 
+      op_role_name)
+    values (#{id,jdbcType=INTEGER}, #{studentId,jdbcType=INTEGER}, #{studentName,jdbcType=VARCHAR}, 
+      #{subjectName,jdbcType=VARCHAR}, #{points,jdbcType=DECIMAL}, #{startTime,jdbcType=BIGINT}, 
+      #{endTime,jdbcType=BIGINT}, #{isDelete,jdbcType=VARCHAR}, #{createTime,jdbcType=BIGINT}, 
+      #{updateTime,jdbcType=BIGINT}, #{opUserId,jdbcType=INTEGER}, #{opUserName,jdbcType=VARCHAR}, 
+      #{opRoleName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zm.entity.Achievement" >
+    insert into zm_achievement
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="studentId != null" >
+        student_id,
+      </if>
+      <if test="studentName != null" >
+        student_name,
+      </if>
+      <if test="subjectName != null" >
+        subject_name,
+      </if>
+      <if test="points != null" >
+        points,
+      </if>
+      <if test="startTime != null" >
+        start_time,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+      <if test="isDelete != null" >
+        is_delete,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="opUserId != null" >
+        op_user_id,
+      </if>
+      <if test="opUserName != null" >
+        op_user_name,
+      </if>
+      <if test="opRoleName != null" >
+        op_role_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="studentId != null" >
+        #{studentId,jdbcType=INTEGER},
+      </if>
+      <if test="studentName != null" >
+        #{studentName,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectName != null" >
+        #{subjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="points != null" >
+        #{points,jdbcType=DECIMAL},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=BIGINT},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=BIGINT},
+      </if>
+      <if test="isDelete != null" >
+        #{isDelete,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=BIGINT},
+      </if>
+      <if test="opUserId != null" >
+        #{opUserId,jdbcType=INTEGER},
+      </if>
+      <if test="opUserName != null" >
+        #{opUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="opRoleName != null" >
+        #{opRoleName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zm.entity.Achievement" >
+    update zm_achievement
+    <set >
+      <if test="studentId != null" >
+        student_id = #{studentId,jdbcType=INTEGER},
+      </if>
+      <if test="studentName != null" >
+        student_name = #{studentName,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectName != null" >
+        subject_name = #{subjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="points != null" >
+        points = #{points,jdbcType=DECIMAL},
+      </if>
+      <if test="startTime != null" >
+        start_time = #{startTime,jdbcType=BIGINT},
+      </if>
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=BIGINT},
+      </if>
+      <if test="isDelete != null" >
+        is_delete = #{isDelete,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=BIGINT},
+      </if>
+      <if test="opUserId != null" >
+        op_user_id = #{opUserId,jdbcType=INTEGER},
+      </if>
+      <if test="opUserName != null" >
+        op_user_name = #{opUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="opRoleName != null" >
+        op_role_name = #{opRoleName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zm.entity.Achievement" >
+    update zm_achievement
+    set student_id = #{studentId,jdbcType=INTEGER},
+      student_name = #{studentName,jdbcType=VARCHAR},
+      subject_name = #{subjectName,jdbcType=VARCHAR},
+      points = #{points,jdbcType=DECIMAL},
+      start_time = #{startTime,jdbcType=BIGINT},
+      end_time = #{endTime,jdbcType=BIGINT},
+      is_delete = #{isDelete,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=BIGINT},
+      update_time = #{updateTime,jdbcType=BIGINT},
+      op_user_id = #{opUserId,jdbcType=INTEGER},
+      op_user_name = #{opUserName,jdbcType=VARCHAR},
+      op_role_name = #{opRoleName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="getAllPage" resultType="com.zm.entity.Achievement">
+    select
+    <include refid="Base_Column_List" />
+    from zm_achievement
+    <where>
+      and is_delete = 0
+      <if test="studentName!=null and studentName != ''">
+       and student_name like CONCAT('%',#{studentName},'%')
+      </if>
+      <if test="subjectName!=null and subjectName != ''">
+        and subject_name like CONCAT('%',#{subjectName},'%')
+      </if>
+      <if test="startTime!=null and startTime != 0">
+        and start_time >= #{startTime,jdbcType=BIGINT}
+      </if>
+      <if test="endTime!=null and endTime != 0">
+        and end_time &lt;= #{endTime,jdbcType=BIGINT}
+      </if>
+    </where>
+    order by update_time desc
+  </select>
+</mapper>

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zm.mapper.ClassMapper" >
+  <resultMap id="BaseResultMap" type="com.zm.entity.Class" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="class_size" property="classSize" jdbcType="BIGINT" />
+    <result column="is_delete" property="isDelete" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="BIGINT" />
+    <result column="update_time" property="updateTime" jdbcType="BIGINT" />
+    <result column="op_user_id" property="opUserId" jdbcType="INTEGER" />
+    <result column="op_user_name" property="opUserName" jdbcType="VARCHAR" />
+    <result column="op_role_name" property="opRoleName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, class_size, is_delete, create_time, update_time, op_user_id, op_user_name, 
+    op_role_name
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from zm_class
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from zm_class
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zm.entity.Class" >
+    insert into zm_class (id, name, class_size, 
+      is_delete, create_time, update_time, 
+      op_user_id, op_user_name, op_role_name
+      )
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{classSize,jdbcType=BIGINT}, 
+      #{isDelete,jdbcType=VARCHAR}, #{createTime,jdbcType=BIGINT}, #{updateTime,jdbcType=BIGINT}, 
+      #{opUserId,jdbcType=INTEGER}, #{opUserName,jdbcType=VARCHAR}, #{opRoleName,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zm.entity.Class" >
+    insert into zm_class
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="classSize != null" >
+        class_size,
+      </if>
+      <if test="isDelete != null" >
+        is_delete,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="opUserId != null" >
+        op_user_id,
+      </if>
+      <if test="opUserName != null" >
+        op_user_name,
+      </if>
+      <if test="opRoleName != null" >
+        op_role_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="classSize != null" >
+        #{classSize,jdbcType=BIGINT},
+      </if>
+      <if test="isDelete != null" >
+        #{isDelete,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=BIGINT},
+      </if>
+      <if test="opUserId != null" >
+        #{opUserId,jdbcType=INTEGER},
+      </if>
+      <if test="opUserName != null" >
+        #{opUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="opRoleName != null" >
+        #{opRoleName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zm.entity.Class" >
+    update zm_class
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="classSize != null" >
+        class_size = #{classSize,jdbcType=BIGINT},
+      </if>
+      <if test="isDelete != null" >
+        is_delete = #{isDelete,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=BIGINT},
+      </if>
+      <if test="opUserId != null" >
+        op_user_id = #{opUserId,jdbcType=INTEGER},
+      </if>
+      <if test="opUserName != null" >
+        op_user_name = #{opUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="opRoleName != null" >
+        op_role_name = #{opRoleName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zm.entity.Class" >
+    update zm_class
+    set name = #{name,jdbcType=VARCHAR},
+      class_size = #{classSize,jdbcType=BIGINT},
+      is_delete = #{isDelete,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=BIGINT},
+      update_time = #{updateTime,jdbcType=BIGINT},
+      op_user_id = #{opUserId,jdbcType=INTEGER},
+      op_user_name = #{opUserName,jdbcType=VARCHAR},
+      op_role_name = #{opRoleName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

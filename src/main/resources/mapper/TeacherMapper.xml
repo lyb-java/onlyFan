@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zm.mapper.TeacherMapper" >
+  <resultMap id="BaseResultMap" type="com.zm.entity.Teacher" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="teacher_no" property="teacherNo" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="gender" property="gender" jdbcType="VARCHAR" />
+    <result column="age" property="age" jdbcType="INTEGER" />
+    <result column="birthday" property="birthday" jdbcType="DATE" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="admission_date" property="admissionDate" jdbcType="DATE" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+    <result column="is_delete" property="isDelete" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="BIGINT" />
+    <result column="update_time" property="updateTime" jdbcType="BIGINT" />
+    <result column="op_user_id" property="opUserId" jdbcType="INTEGER" />
+    <result column="op_user_name" property="opUserName" jdbcType="VARCHAR" />
+    <result column="op_role_name" property="opRoleName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, teacher_no, name, gender, age, birthday, phone, address, admission_date, state, 
+    is_delete, create_time, update_time, op_user_id, op_user_name, op_role_name
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from zm_teacher
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from zm_teacher
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zm.entity.Teacher" >
+    insert into zm_teacher (id, teacher_no, name, 
+      gender, age, birthday, 
+      phone, address, admission_date, 
+      state, is_delete, create_time, 
+      update_time, op_user_id, op_user_name, 
+      op_role_name)
+    values (#{id,jdbcType=INTEGER}, #{teacherNo,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{gender,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, #{birthday,jdbcType=DATE}, 
+      #{phone,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{admissionDate,jdbcType=DATE}, 
+      #{state,jdbcType=VARCHAR}, #{isDelete,jdbcType=VARCHAR}, #{createTime,jdbcType=BIGINT}, 
+      #{updateTime,jdbcType=BIGINT}, #{opUserId,jdbcType=INTEGER}, #{opUserName,jdbcType=VARCHAR}, 
+      #{opRoleName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zm.entity.Teacher" >
+    insert into zm_teacher
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="teacherNo != null" >
+        teacher_no,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="gender != null" >
+        gender,
+      </if>
+      <if test="age != null" >
+        age,
+      </if>
+      <if test="birthday != null" >
+        birthday,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="admissionDate != null" >
+        admission_date,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="isDelete != null" >
+        is_delete,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="opUserId != null" >
+        op_user_id,
+      </if>
+      <if test="opUserName != null" >
+        op_user_name,
+      </if>
+      <if test="opRoleName != null" >
+        op_role_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="teacherNo != null" >
+        #{teacherNo,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" >
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=DATE},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="admissionDate != null" >
+        #{admissionDate,jdbcType=DATE},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null" >
+        #{isDelete,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=BIGINT},
+      </if>
+      <if test="opUserId != null" >
+        #{opUserId,jdbcType=INTEGER},
+      </if>
+      <if test="opUserName != null" >
+        #{opUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="opRoleName != null" >
+        #{opRoleName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zm.entity.Teacher" >
+    update zm_teacher
+    <set >
+      <if test="teacherNo != null" >
+        teacher_no = #{teacherNo,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        gender = #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" >
+        age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="birthday != null" >
+        birthday = #{birthday,jdbcType=DATE},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="admissionDate != null" >
+        admission_date = #{admissionDate,jdbcType=DATE},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null" >
+        is_delete = #{isDelete,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=BIGINT},
+      </if>
+      <if test="opUserId != null" >
+        op_user_id = #{opUserId,jdbcType=INTEGER},
+      </if>
+      <if test="opUserName != null" >
+        op_user_name = #{opUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="opRoleName != null" >
+        op_role_name = #{opRoleName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zm.entity.Teacher" >
+    update zm_teacher
+    set teacher_no = #{teacherNo,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=VARCHAR},
+      age = #{age,jdbcType=INTEGER},
+      birthday = #{birthday,jdbcType=DATE},
+      phone = #{phone,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      admission_date = #{admissionDate,jdbcType=DATE},
+      state = #{state,jdbcType=VARCHAR},
+      is_delete = #{isDelete,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=BIGINT},
+      update_time = #{updateTime,jdbcType=BIGINT},
+      op_user_id = #{opUserId,jdbcType=INTEGER},
+      op_user_name = #{opUserName,jdbcType=VARCHAR},
+      op_role_name = #{opRoleName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

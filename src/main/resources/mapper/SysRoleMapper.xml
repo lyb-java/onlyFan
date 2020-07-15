@@ -111,4 +111,10 @@
       create_time = #{createTime,jdbcType=BIGINT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="getAllOption" resultType="com.zm.dto.RoleRspDto">
+    select
+    <include refid="Base_Column_List" />
+    from zm_sys_role
+    where is_delete = 0
+  </select>
 </mapper>

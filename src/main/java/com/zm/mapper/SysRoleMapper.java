@@ -21,4 +21,6 @@ public interface SysRoleMapper {
     int updateByPrimaryKey(SysRole record);
 
     List<RoleRspDto> getAllPage(RoleReqDto condition);
+
+    List<RoleRspDto> getAllOption();
 }

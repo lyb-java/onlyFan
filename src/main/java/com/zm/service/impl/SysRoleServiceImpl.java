@@ -78,4 +78,10 @@ public class SysRoleServiceImpl implements SysRoleService {
     public Integer delete(Integer id) throws Exception {
         return sysRoleMapper.deleteByPrimaryKey(id);
     }
+
+    @Override
+    public List<RoleRspDto> getOption() throws Exception {
+        List<RoleRspDto> roleRspDtos = sysRoleMapper.getAllOption();
+        return roleRspDtos;
+    }
 }

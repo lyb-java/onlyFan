@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zm.mapper.CourseMapper" >
+  <resultMap id="BaseResultMap" type="com.zm.entity.Course" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="class_id" property="classId" jdbcType="INTEGER" />
+    <result column="class_name" property="className" jdbcType="VARCHAR" />
+    <result column="teacher_id" property="teacherId" jdbcType="INTEGER" />
+    <result column="teacher_name" property="teacherName" jdbcType="VARCHAR" />
+    <result column="course_name" property="courseName" jdbcType="VARCHAR" />
+    <result column="start_time" property="startTime" jdbcType="BIGINT" />
+    <result column="end_time" property="endTime" jdbcType="BIGINT" />
+    <result column="is_effective" property="isEffective" jdbcType="VARCHAR" />
+    <result column="is_delete" property="isDelete" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="BIGINT" />
+    <result column="update_time" property="updateTime" jdbcType="BIGINT" />
+    <result column="op_user_id" property="opUserId" jdbcType="INTEGER" />
+    <result column="op_user_name" property="opUserName" jdbcType="VARCHAR" />
+    <result column="op_role_name" property="opRoleName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, class_id, class_name, teacher_id, teacher_name, course_name, start_time, end_time, 
+    is_effective, is_delete, create_time, update_time, op_user_id, op_user_name, op_role_name
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from zm_course
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from zm_course
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zm.entity.Course" >
+    insert into zm_course (id, class_id, class_name, 
+      teacher_id, teacher_name, course_name, 
+      start_time, end_time, is_effective, 
+      is_delete, create_time, update_time, 
+      op_user_id, op_user_name, op_role_name
+      )
+    values (#{id,jdbcType=INTEGER}, #{classId,jdbcType=INTEGER}, #{className,jdbcType=VARCHAR}, 
+      #{teacherId,jdbcType=INTEGER}, #{teacherName,jdbcType=VARCHAR}, #{courseName,jdbcType=VARCHAR}, 
+      #{startTime,jdbcType=BIGINT}, #{endTime,jdbcType=BIGINT}, #{isEffective,jdbcType=VARCHAR}, 
+      #{isDelete,jdbcType=VARCHAR}, #{createTime,jdbcType=BIGINT}, #{updateTime,jdbcType=BIGINT}, 
+      #{opUserId,jdbcType=INTEGER}, #{opUserName,jdbcType=VARCHAR}, #{opRoleName,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zm.entity.Course" >
+    insert into zm_course
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="classId != null" >
+        class_id,
+      </if>
+      <if test="className != null" >
+        class_name,
+      </if>
+      <if test="teacherId != null" >
+        teacher_id,
+      </if>
+      <if test="teacherName != null" >
+        teacher_name,
+      </if>
+      <if test="courseName != null" >
+        course_name,
+      </if>
+      <if test="startTime != null" >
+        start_time,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+      <if test="isEffective != null" >
+        is_effective,
+      </if>
+      <if test="isDelete != null" >
+        is_delete,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="opUserId != null" >
+        op_user_id,
+      </if>
+      <if test="opUserName != null" >
+        op_user_name,
+      </if>
+      <if test="opRoleName != null" >
+        op_role_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="classId != null" >
+        #{classId,jdbcType=INTEGER},
+      </if>
+      <if test="className != null" >
+        #{className,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherId != null" >
+        #{teacherId,jdbcType=INTEGER},
+      </if>
+      <if test="teacherName != null" >
+        #{teacherName,jdbcType=VARCHAR},
+      </if>
+      <if test="courseName != null" >
+        #{courseName,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=BIGINT},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=BIGINT},
+      </if>
+      <if test="isEffective != null" >
+        #{isEffective,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null" >
+        #{isDelete,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=BIGINT},
+      </if>
+      <if test="opUserId != null" >
+        #{opUserId,jdbcType=INTEGER},
+      </if>
+      <if test="opUserName != null" >
+        #{opUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="opRoleName != null" >
+        #{opRoleName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zm.entity.Course" >
+    update zm_course
+    <set >
+      <if test="classId != null" >
+        class_id = #{classId,jdbcType=INTEGER},
+      </if>
+      <if test="className != null" >
+        class_name = #{className,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherId != null" >
+        teacher_id = #{teacherId,jdbcType=INTEGER},
+      </if>
+      <if test="teacherName != null" >
+        teacher_name = #{teacherName,jdbcType=VARCHAR},
+      </if>
+      <if test="courseName != null" >
+        course_name = #{courseName,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        start_time = #{startTime,jdbcType=BIGINT},
+      </if>
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=BIGINT},
+      </if>
+      <if test="isEffective != null" >
+        is_effective = #{isEffective,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null" >
+        is_delete = #{isDelete,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=BIGINT},
+      </if>
+      <if test="opUserId != null" >
+        op_user_id = #{opUserId,jdbcType=INTEGER},
+      </if>
+      <if test="opUserName != null" >
+        op_user_name = #{opUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="opRoleName != null" >
+        op_role_name = #{opRoleName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zm.entity.Course" >
+    update zm_course
+    set class_id = #{classId,jdbcType=INTEGER},
+      class_name = #{className,jdbcType=VARCHAR},
+      teacher_id = #{teacherId,jdbcType=INTEGER},
+      teacher_name = #{teacherName,jdbcType=VARCHAR},
+      course_name = #{courseName,jdbcType=VARCHAR},
+      start_time = #{startTime,jdbcType=BIGINT},
+      end_time = #{endTime,jdbcType=BIGINT},
+      is_effective = #{isEffective,jdbcType=VARCHAR},
+      is_delete = #{isDelete,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=BIGINT},
+      update_time = #{updateTime,jdbcType=BIGINT},
+      op_user_id = #{opUserId,jdbcType=INTEGER},
+      op_user_name = #{opUserName,jdbcType=VARCHAR},
+      op_role_name = #{opRoleName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zm.mapper.ClassRelationTeacherMapper" >
+  <resultMap id="BaseResultMap" type="com.zm.entity.ClassRelationTeacher" >
+    <result column="class_id" property="classId" jdbcType="INTEGER" />
+    <result column="teacher_id" property="teacherId" jdbcType="INTEGER" />
+    <result column="is_delete" property="isDelete" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="BIGINT" />
+    <result column="update_time" property="updateTime" jdbcType="BIGINT" />
+  </resultMap>
+  <insert id="insert" parameterType="com.zm.entity.ClassRelationTeacher" >
+    insert into zm_class_relation_teacher (class_id, teacher_id, is_delete, 
+      create_time, update_time)
+    values (#{classId,jdbcType=INTEGER}, #{teacherId,jdbcType=INTEGER}, #{isDelete,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=BIGINT}, #{updateTime,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zm.entity.ClassRelationTeacher" >
+    insert into zm_class_relation_teacher
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="classId != null" >
+        class_id,
+      </if>
+      <if test="teacherId != null" >
+        teacher_id,
+      </if>
+      <if test="isDelete != null" >
+        is_delete,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="classId != null" >
+        #{classId,jdbcType=INTEGER},
+      </if>
+      <if test="teacherId != null" >
+        #{teacherId,jdbcType=INTEGER},
+      </if>
+      <if test="isDelete != null" >
+        #{isDelete,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+</mapper>

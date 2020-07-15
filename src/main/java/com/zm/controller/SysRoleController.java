@@ -92,6 +92,25 @@ public class SysRoleController {
 
     }
     /**
+     * 查询后台角色下拉列表
+     *
+     * @param
+     * @return ZMResult
+     */
+    @ApiOperation(value = "查询后台角色下拉列表")
+    @PostMapping("/getoption")
+    public ZMResult<List<RoleRspDto>> getOption() {
+        try {
+            ZMResult<List<RoleRspDto>> zmResult = new ZMResult<>(Message.SUCCESS);
+            zmResult.setData(sysRoleService.getOption());
+            return zmResult;
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            return new ZMResult<>(e);
+        }
+
+    }
+    /**
      * 角色修改
      *
      * @param
