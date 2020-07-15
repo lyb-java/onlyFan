@@ -11,4 +11,6 @@ public class Constant {
      */
     public static final String IS_ENABLE_YES = "1";
     public static final String IS_ENABLE_NO = "1";
+
+    public static final String REQ_ATTR_TOKEN = "user_token";
 }

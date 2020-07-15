@@ -1,5 +1,6 @@
 package com.zm.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -46,10 +47,12 @@ public class SysUserServiceImpl implements SysUserService {
         if(Constant.IS_ENABLE_NO.equals(sysUser.getIsEnable())){
             throw new ValidateException("账号已失效，请联系管理员李霞！");
         }
+        Integer userId =user.getId();
+        String jsonUser = JSON.toJSONString(user);
         //生成token
         String token="";
         //这里调用创建JWT信息的方法
-        token = JwtUtil.createToken(user.getId());
+        token = JwtUtil.createToken(jsonUser,userId);
         //token 用户唯一标识
         user.setToken(token);
         return user;

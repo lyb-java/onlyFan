@@ -7,6 +7,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
+
 /**
  *  token 处理
  * @author liyangbin
@@ -24,7 +25,7 @@ public class JwtUtil {
      * @param **password**
      * @return
      */
-    public static String createToken(Integer userId) throws Exception{
+    public static String createToken(String jsonUser,Integer userId) throws Exception{
         try {
             // 设置过期时间
             Date date = new Date(System.currentTimeMillis() + EXPIRE_TIME);
@@ -37,6 +38,7 @@ public class JwtUtil {
             // 返回token字符串
             return JWT.create()
                     .withHeader(header)
+                    .withClaim("user", jsonUser)
                     .withClaim("userId", userId)
                     .withExpiresAt(date)
                     .sign(algorithm);
@@ -60,6 +62,21 @@ public class JwtUtil {
             return userId;
         } catch (Exception e){
             return 0;
+        }
+    }
+    /**
+     * 解析token 获取用户信息
+     * @param **token**
+     * @return
+     */
+    public static String parseToken(String token){
+        try {
+            Algorithm algorithm = Algorithm.HMAC256(TOKEN_SECRET);
+            JWTVerifier verifier = JWT.require(algorithm).build();
+            DecodedJWT jwt = verifier.verify(token);
+            return jwt.getClaim("user").asString();
+        } catch (Exception e){
+            return null;
         }
     }
 }
