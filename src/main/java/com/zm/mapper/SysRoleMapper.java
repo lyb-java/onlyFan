@@ -7,14 +7,17 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+/**
+ * @author Machenike
+ */
 public interface SysRoleMapper {
-    int deleteByPrimaryKey(@Param("id") Integer id);
+    int deleteByPrimaryKey(@Param("roleId") Integer roleId);
 
     int insert(SysRole record);
 
     int insertSelective(SysRole record);
 
-    RoleRspDto selectByPrimaryKey(@Param("id") Integer id);
+    RoleRspDto selectByPrimaryKey(@Param("roleId") Integer roleId);
 
     int updateByPrimaryKeySelective(SysRole record);
 
@@ -22,5 +25,5 @@ public interface SysRoleMapper {
 
     List<RoleRspDto> getAllPage(RoleReqDto condition);
 
-    List<RoleRspDto> getAllOption();
+    List<SysRole> getAllOption();
 }

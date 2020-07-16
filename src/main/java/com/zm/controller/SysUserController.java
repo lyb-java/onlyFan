@@ -102,10 +102,10 @@ public class SysUserController {
      */
     @ApiOperation(value = "查询后台用户详情")
     @PostMapping("/getusedetail")
-    public ZMResult<UserRspDto> getDetail(@RequestParam("id") Integer id) {
+    public ZMResult<UserRspDto> getDetail(@RequestParam("userId") Integer userId) {
         try {
             ZMResult<UserRspDto> zmResult = new ZMResult<>(Message.SUCCESS);
-            zmResult.setData(sysUserService.getUserDetail(id));
+            zmResult.setData(sysUserService.getUserDetail(userId));
             return zmResult;
         } catch (Exception e) {
             logger.error(e.getMessage());
@@ -140,10 +140,10 @@ public class SysUserController {
      */
     @ApiOperation(value = "用户修改")
     @PostMapping("/deluser")
-    public ZMResult<Integer> delUser(@RequestParam("id") Integer id) {
+    public ZMResult<Integer> delUser(@RequestParam("userId") Integer userId) {
         try {
             ZMResult<Integer> zmResult = new ZMResult<>(Message.SUCCESS);
-            zmResult.setData(sysUserService.deleteUser(id));
+            zmResult.setData(sysUserService.deleteUser(userId));
             return zmResult;
         } catch (Exception e) {
             logger.error(e.getMessage());

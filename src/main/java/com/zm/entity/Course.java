@@ -1,5 +1,7 @@
 package com.zm.entity;
 
+import lombok.Data;
+
 import java.io.Serializable;
 
 /**
@@ -8,12 +10,13 @@ import java.io.Serializable;
  * @author liyangbin
  * @since 2020-07-15 15:45:31
  */
+@Data
 public class Course implements Serializable {
     private static final long serialVersionUID = 452725972130500671L;
     /**
     * 主键编号
     */
-    private Integer id;
+    private Integer courseId;
     /**
     * 班级编号
     */
@@ -72,124 +75,5 @@ public class Course implements Serializable {
     private String opRoleName;
 
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getClassId() {
-        return classId;
-    }
-
-    public void setClassId(Integer classId) {
-        this.classId = classId;
-    }
-
-    public String getClassName() {
-        return className;
-    }
-
-    public void setClassName(String className) {
-        this.className = className;
-    }
-
-    public Integer getTeacherId() {
-        return teacherId;
-    }
-
-    public void setTeacherId(Integer teacherId) {
-        this.teacherId = teacherId;
-    }
-
-    public String getTeacherName() {
-        return teacherName;
-    }
-
-    public void setTeacherName(String teacherName) {
-        this.teacherName = teacherName;
-    }
-
-    public String getCourseName() {
-        return courseName;
-    }
-
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
-    }
-
-    public Long getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(Long startTime) {
-        this.startTime = startTime;
-    }
-
-    public Long getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Long endTime) {
-        this.endTime = endTime;
-    }
-
-    public String getIsEffective() {
-        return isEffective;
-    }
-
-    public void setIsEffective(String isEffective) {
-        this.isEffective = isEffective;
-    }
-
-    public String getIsDelete() {
-        return isDelete;
-    }
-
-    public void setIsDelete(String isDelete) {
-        this.isDelete = isDelete;
-    }
-
-    public Long getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Long createTime) {
-        this.createTime = createTime;
-    }
-
-    public Long getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Long updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public Integer getOpUserId() {
-        return opUserId;
-    }
-
-    public void setOpUserId(Integer opUserId) {
-        this.opUserId = opUserId;
-    }
-
-    public String getOpUserName() {
-        return opUserName;
-    }
-
-    public void setOpUserName(String opUserName) {
-        this.opUserName = opUserName;
-    }
-
-    public String getOpRoleName() {
-        return opRoleName;
-    }
-
-    public void setOpRoleName(String opRoleName) {
-        this.opRoleName = opRoleName;
-    }
 
 }

@@ -2,6 +2,7 @@ package com.zm.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -13,6 +14,7 @@ import javax.validation.constraints.Size;
  * @Date: Created in 11:14:41 2020年3月8日
  * @Modified By:
  */
+@Data
 @ApiModel(value = "用户信息新增Dto")
 public class UserAddReqDto {
     @NotNull(message = "账户名称不能为空")
@@ -39,53 +41,8 @@ public class UserAddReqDto {
     @ApiModelProperty(value = "角色编号")
     private Integer roleId;
 
-    public Integer getRoleId() {
-        return roleId;
-    }
+    @ApiModelProperty(value = "角色名称")
+    private String roleName;
 
-    public void setRoleId(Integer roleId) {
-        this.roleId = roleId;
-    }
 
-    public String getAccount() {
-        return account;
-    }
-
-    public void setAccount(String account) {
-        this.account = account;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getIsEnable() {
-        return isEnable;
-    }
-
-    public void setIsEnable(String isEnable) {
-        this.isEnable = isEnable;
-    }
-
-    @Override
-    public String toString() {
-        return "UserAddReqDto{" +
-                "account='" + account + '\'' +
-                ", password='" + password + '\'' +
-                ", userName='" + userName + '\'' +
-                ", isEnable='" + isEnable + '\'' +
-                '}';
-    }
 }

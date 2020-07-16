@@ -1,5 +1,7 @@
 package com.zm.entity;
 
+import lombok.Data;
+
 import java.io.Serializable;
 
 /**
@@ -8,12 +10,13 @@ import java.io.Serializable;
  * @author makejava
  * @since 2020-05-14 16:49:19
  */
+@Data
 public class SysUser implements Serializable {
     private static final long serialVersionUID = -62814893794734563L;
     /**
     * 主键id
     */
-    private Integer id;
+    private Integer userId;
     /**
     * 账号
     */
@@ -42,69 +45,5 @@ public class SysUser implements Serializable {
      * 是否删除（0否,1是）
      */
     private String isDelete;
-
-    public String getIsDelete() {
-        return isDelete;
-    }
-
-    public void setIsDelete(String isDelete) {
-        this.isDelete = isDelete;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getAccount() {
-        return account;
-    }
-
-    public void setAccount(String account) {
-        this.account = account;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getIsEnable() {
-        return isEnable;
-    }
-
-    public void setIsEnable(String isEnable) {
-        this.isEnable = isEnable;
-    }
-
-    public Long getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Long createTime) {
-        this.createTime = createTime;
-    }
-
-    public Long getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Long updateTime) {
-        this.updateTime = updateTime;
-    }
 
 }

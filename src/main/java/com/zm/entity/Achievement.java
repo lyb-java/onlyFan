@@ -1,5 +1,7 @@
 package com.zm.entity;
 
+import lombok.Data;
+
 import java.io.Serializable;
 
 /**
@@ -8,12 +10,13 @@ import java.io.Serializable;
  * @author liyangbin
  * @since 2020-07-15 15:45:31
  */
+@Data
 public class Achievement implements Serializable {
     private static final long serialVersionUID = 412244063861621507L;
     /**
     * 主键编号
     */
-    private Integer id;
+    private Integer achievementId;
     /**
     * 学生编号
     */
@@ -64,108 +67,5 @@ public class Achievement implements Serializable {
     private String opRoleName;
 
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getStudentId() {
-        return studentId;
-    }
-
-    public void setStudentId(Integer studentId) {
-        this.studentId = studentId;
-    }
-
-    public String getStudentName() {
-        return studentName;
-    }
-
-    public void setStudentName(String studentName) {
-        this.studentName = studentName;
-    }
-
-    public String getSubjectName() {
-        return subjectName;
-    }
-
-    public void setSubjectName(String subjectName) {
-        this.subjectName = subjectName;
-    }
-
-    public Double getPoints() {
-        return points;
-    }
-
-    public void setPoints(Double points) {
-        this.points = points;
-    }
-
-    public Long getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(Long startTime) {
-        this.startTime = startTime;
-    }
-
-    public Long getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Long endTime) {
-        this.endTime = endTime;
-    }
-
-    public String getIsDelete() {
-        return isDelete;
-    }
-
-    public void setIsDelete(String isDelete) {
-        this.isDelete = isDelete;
-    }
-
-    public Long getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Long createTime) {
-        this.createTime = createTime;
-    }
-
-    public Long getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Long updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public Integer getOpUserId() {
-        return opUserId;
-    }
-
-    public void setOpUserId(Integer opUserId) {
-        this.opUserId = opUserId;
-    }
-
-    public String getOpUserName() {
-        return opUserName;
-    }
-
-    public void setOpUserName(String opUserName) {
-        this.opUserName = opUserName;
-    }
-
-    public String getOpRoleName() {
-        return opRoleName;
-    }
-
-    public void setOpRoleName(String opRoleName) {
-        this.opRoleName = opRoleName;
-    }
 
 }

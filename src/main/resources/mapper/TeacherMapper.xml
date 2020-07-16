@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.zm.mapper.TeacherMapper" >
   <resultMap id="BaseResultMap" type="com.zm.entity.Teacher" >
-    <id column="id" property="id" jdbcType="INTEGER" />
+    <id column="teacher_id" property="teacherId" jdbcType="INTEGER" />
     <result column="teacher_no" property="teacherNo" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="gender" property="gender" jdbcType="VARCHAR" />
@@ -20,28 +20,28 @@
     <result column="op_role_name" property="opRoleName" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, teacher_no, name, gender, age, birthday, phone, address, admission_date, state, 
+    teacher_id, teacher_no, name, gender, age, birthday, phone, address, admission_date, state,
     is_delete, create_time, update_time, op_user_id, op_user_name, op_role_name
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from zm_teacher
-    where id = #{id,jdbcType=INTEGER}
+    where teacher_id = #{teacherId,jdbcType=INTEGER}
   </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from zm_teacher
-    where id = #{id,jdbcType=INTEGER}
+    where teacher_id = #{teacherId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.zm.entity.Teacher" >
-    insert into zm_teacher (id, teacher_no, name, 
+    insert into zm_teacher (teacher_id, teacher_no, name,
       gender, age, birthday, 
       phone, address, admission_date, 
       state, is_delete, create_time, 
       update_time, op_user_id, op_user_name, 
       op_role_name)
-    values (#{id,jdbcType=INTEGER}, #{teacherNo,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+    values (#{teacherId,jdbcType=INTEGER}, #{teacherNo,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
       #{gender,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, #{birthday,jdbcType=DATE}, 
       #{phone,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{admissionDate,jdbcType=DATE}, 
       #{state,jdbcType=VARCHAR}, #{isDelete,jdbcType=VARCHAR}, #{createTime,jdbcType=BIGINT}, 
@@ -51,8 +51,8 @@
   <insert id="insertSelective" parameterType="com.zm.entity.Teacher" >
     insert into zm_teacher
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
+      <if test="teacherId != null" >
+        teacher_id,
       </if>
       <if test="teacherNo != null" >
         teacher_no,
@@ -101,8 +101,8 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
+      <if test="teacherId != null" >
+        #{teacherId,jdbcType=INTEGER},
       </if>
       <if test="teacherNo != null" >
         #{teacherNo,jdbcType=VARCHAR},
@@ -200,7 +200,7 @@
         op_role_name = #{opRoleName,jdbcType=VARCHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where teacher_id = #{teacherId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.zm.entity.Teacher" >
     update zm_teacher
@@ -219,7 +219,7 @@
       op_user_id = #{opUserId,jdbcType=INTEGER},
       op_user_name = #{opUserName,jdbcType=VARCHAR},
       op_role_name = #{opRoleName,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
+    where teacher_id = #{teacherId,jdbcType=INTEGER}
   </update>
   <select id="getAllPage" resultType="com.zm.entity.Teacher">
     select

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.zm.mapper.SysUserMapper" >
   <resultMap id="BaseResultMap" type="com.zm.entity.SysUser" >
-    <id column="id" property="id" jdbcType="INTEGER" />
+    <id column="user_id" property="userId" jdbcType="INTEGER" />
     <result column="account" property="account" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
     <result column="user_name" property="userName" jdbcType="VARCHAR" />
@@ -18,13 +18,13 @@
   <resultMap id="userRspDtoMap"  extends="BaseResultMap"  type="com.zm.dto.UserRspDto" >
   </resultMap>
   <sql id="Base_Column_List" >
-    u.id, u.account, u.user_name,password, u.is_enable, u.create_time, u.update_time,u.is_delete
+    u.user_id, u.account, u.user_name,password, u.is_enable, u.create_time, u.update_time,u.is_delete
   </sql>
   <select id="selectByUser" resultMap="userResultMap" parameterType="com.zm.entity.SysUser" >
     select
     <include refid="Base_Column_List" />,r.role_name,r.access
     from zm_sys_user u
-    LEFT JOIN zm_sys_user_role AS ur ON ur.user_id = u.id
+    LEFT JOIN zm_sys_user_role AS ur ON ur.user_id = u.user_id
     LEFT JOIN zm_sys_role AS r ON r.id = ur.role_id
     where u.account = #{account,jdbcType=VARCHAR}
     and u.password = #{password,jdbcType=VARCHAR}
@@ -35,26 +35,26 @@
     select 
     <include refid="Base_Column_List" />
     from zm_sys_user u
-    where u.id = #{id,jdbcType=INTEGER}
+    where u.user_id = #{userId,jdbcType=INTEGER}
     and u.is_delete = 0
   </select>
   <update id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     update  zm_sys_user set is_delete = 1
-    where id = #{id,jdbcType=INTEGER}
+    where user_id = #{userId,jdbcType=INTEGER}
   </update>
   <insert id="insert" parameterType="com.zm.entity.SysUser"  useGeneratedKeys="true"  keyProperty="id" keyColumn="id">
-    insert into zm_sys_user (id, account, password, 
+    insert into zm_sys_user (user_id, account, password,
       user_name, is_enable, create_time, 
       update_time,is_delete)
-    values (#{id,jdbcType=INTEGER}, #{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+    values (#{userId,jdbcType=INTEGER}, #{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
       #{userName,jdbcType=VARCHAR}, #{isEnable,jdbcType=VARCHAR}, #{createTime,jdbcType=BIGINT}, 
       #{updateTime,jdbcType=BIGINT},#{isDelete,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.zm.entity.SysUser" >
     insert into zm_sys_user
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
+      <if test="userId != null" >
+        user_id,
       </if>
       <if test="account != null" >
         account,
@@ -79,8 +79,8 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
       </if>
       <if test="account != null" >
         #{account,jdbcType=VARCHAR},
@@ -131,7 +131,7 @@
         is_delete = #{isDelete,jdbcType=VARCHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where user_id = #{userId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.zm.entity.SysUser" >
     update zm_sys_user
@@ -142,14 +142,14 @@
       create_time = #{createTime,jdbcType=BIGINT},
       update_time = #{updateTime,jdbcType=BIGINT},
       is_delete = #{isDelete,jdbcType=VARCHAR},
-    where id = #{id,jdbcType=INTEGER}
+    where user_id = #{userId,jdbcType=INTEGER}
   </update>
     <select id="getUserAllPage" resultMap="userResultMap">
       select
       <include refid="Base_Column_List" />,r.role_name roleName,r.access access
       from zm_sys_user u
-      LEFT JOIN zm_sys_user_role AS ur ON ur.user_id = u.id
-      LEFT JOIN zm_sys_role AS r ON r.id = ur.role_id
+      LEFT JOIN zm_sys_user_role AS ur ON ur.user_id = u.user_id
+      LEFT JOIN zm_sys_role AS r ON r.role_id = ur.role_id
       <where>
         <if test="condition.userName!=null and condition.userName!=''">
           u.user_name  LIKE CONCAT('%',#{condition.userName},'%')

@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.zm.common.Message;
 import com.zm.common.ZMResult;
 import com.zm.dto.*;
+import com.zm.entity.SysRole;
 import com.zm.entity.SysUser;
 import com.zm.exception.ValidateException;
 import com.zm.service.SysRoleService;
@@ -80,10 +81,10 @@ public class SysRoleController {
      */
     @ApiOperation(value = "查询后台角色详情")
     @PostMapping("/getdetail")
-    public ZMResult<RoleRspDto> getDetail(@RequestParam("id") Integer id) {
+    public ZMResult<RoleRspDto> getDetail(@RequestParam("roleId") Integer roleId) {
         try {
             ZMResult<RoleRspDto> zmResult = new ZMResult<>(Message.SUCCESS);
-            zmResult.setData(sysRoleService.getDetail(id));
+            zmResult.setData(sysRoleService.getDetail(roleId));
             return zmResult;
         } catch (Exception e) {
             logger.error(e.getMessage());
@@ -91,6 +92,7 @@ public class SysRoleController {
         }
 
     }
+
     /**
      * 查询后台角色下拉列表
      *
@@ -99,9 +101,9 @@ public class SysRoleController {
      */
     @ApiOperation(value = "查询后台角色下拉列表")
     @PostMapping("/getoption")
-    public ZMResult<List<RoleRspDto>> getOption() {
+    public ZMResult<List<SysRole>> getOption() {
         try {
-            ZMResult<List<RoleRspDto>> zmResult = new ZMResult<>(Message.SUCCESS);
+            ZMResult<List<SysRole>> zmResult = new ZMResult<>(Message.SUCCESS);
             zmResult.setData(sysRoleService.getOption());
             return zmResult;
         } catch (Exception e) {
@@ -137,10 +139,10 @@ public class SysRoleController {
      */
     @ApiOperation(value = "角色修改")
     @PostMapping("/delete")
-    public ZMResult<Integer> delRole(@RequestParam("id") Integer id) {
+    public ZMResult<Integer> delRole(@RequestParam("roleId") Integer roleId) {
         try {
             ZMResult<Integer> zmResult = new ZMResult<>(Message.SUCCESS);
-            zmResult.setData(sysRoleService.delete(id));
+            zmResult.setData(sysRoleService.delete(roleId));
             return zmResult;
         } catch (Exception e) {
             logger.error(e.getMessage());

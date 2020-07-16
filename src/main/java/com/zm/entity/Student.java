@@ -1,5 +1,7 @@
 package com.zm.entity;
 
+import lombok.Data;
+
 import java.io.Serializable;
 
 /**
@@ -8,12 +10,13 @@ import java.io.Serializable;
  * @author liyangbin
  * @since 2020-07-15 15:45:31
  */
+@Data
 public class Student implements Serializable {
     private static final long serialVersionUID = 509886575917087054L;
     /**
     * 主键编号
     */
-    private Integer id;
+    private Integer studentId;
     /**
     * 学号
     */
@@ -76,132 +79,5 @@ public class Student implements Serializable {
     private String opRoleName;
 
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getStuNo() {
-        return stuNo;
-    }
-
-    public void setStuNo(String stuNo) {
-        this.stuNo = stuNo;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-
-    public Object getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(Object birthday) {
-        this.birthday = birthday;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public Object getAdmissionDate() {
-        return admissionDate;
-    }
-
-    public void setAdmissionDate(Object admissionDate) {
-        this.admissionDate = admissionDate;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public String getIsDelete() {
-        return isDelete;
-    }
-
-    public void setIsDelete(String isDelete) {
-        this.isDelete = isDelete;
-    }
-
-    public Long getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Long createTime) {
-        this.createTime = createTime;
-    }
-
-    public Long getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Long updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public Integer getOpUserId() {
-        return opUserId;
-    }
-
-    public void setOpUserId(Integer opUserId) {
-        this.opUserId = opUserId;
-    }
-
-    public String getOpUserName() {
-        return opUserName;
-    }
-
-    public void setOpUserName(String opUserName) {
-        this.opUserName = opUserName;
-    }
-
-    public String getOpRoleName() {
-        return opRoleName;
-    }
-
-    public void setOpRoleName(String opRoleName) {
-        this.opRoleName = opRoleName;
-    }
 
 }

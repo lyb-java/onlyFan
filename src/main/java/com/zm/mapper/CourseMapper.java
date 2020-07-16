@@ -2,17 +2,21 @@ package com.zm.mapper;
 
 import com.zm.dto.CourseReqDto;
 import com.zm.entity.Course;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+/**
+ * @author Machenike
+ */
 public interface CourseMapper {
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(@Param("courseId") Integer courseId);
 
     int insert(Course record);
 
     int insertSelective(Course record);
 
-    Course selectByPrimaryKey(Integer id);
+    Course selectByPrimaryKey(@Param("courseId") Integer courseId);
 
     int updateByPrimaryKeySelective(Course record);
 

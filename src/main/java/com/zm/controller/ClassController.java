@@ -83,10 +83,10 @@ public class ClassController extends BaseController{
      */
     @ApiOperation(value = "查询详情")
     @PostMapping("/getdetail")
-    public ZMResult<Class> getDetail(@RequestParam("id") Integer id) {
+    public ZMResult<Class> getDetail(@RequestParam("classId") Integer classId) {
         try {
             ZMResult<Class> zmResult = new ZMResult<>(Message.SUCCESS);
-            zmResult.setData(classService.queryById(id));
+            zmResult.setData(classService.queryById(classId));
             return zmResult;
         } catch (Exception e) {
             logger.error(e.getMessage());
@@ -121,10 +121,10 @@ public class ClassController extends BaseController{
      */
     @ApiOperation(value = "删除")
     @PostMapping("/delete")
-    public ZMResult<Integer> delRole(@RequestParam("id") Integer id) {
+    public ZMResult<Integer> delRole(@RequestParam("classId") Integer classId) {
         try {
             ZMResult<Integer> zmResult = new ZMResult<>(Message.SUCCESS);
-            zmResult.setData(classService.deleteById(id));
+            zmResult.setData(classService.deleteById(classId));
             return zmResult;
         } catch (Exception e) {
             logger.error(e.getMessage());

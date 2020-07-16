@@ -6,7 +6,6 @@ import com.zm.common.ZMResult;
 import com.zm.dto.PageViewDto;
 import com.zm.dto.PageViewRspDto;
 import com.zm.dto.StudentReqDto;
-import com.zm.entity.Class;
 import com.zm.entity.Student;
 import com.zm.service.StudentService;
 import io.swagger.annotations.Api;
@@ -85,10 +84,10 @@ public class StudentController extends BaseController{
      */
     @ApiOperation(value = "查询详情")
     @PostMapping("/getdetail")
-    public ZMResult<Student> getDetail(@RequestParam("id") Integer id) {
+    public ZMResult<Student> getDetail(@RequestParam("studentId") Integer studentId) {
         try {
             ZMResult<Student> zmResult = new ZMResult<>(Message.SUCCESS);
-            zmResult.setData(studentService.queryById(id));
+            zmResult.setData(studentService.queryById(studentId));
             return zmResult;
         } catch (Exception e) {
             logger.error(e.getMessage());
@@ -123,10 +122,10 @@ public class StudentController extends BaseController{
      */
     @ApiOperation(value = "删除")
     @PostMapping("/delete")
-    public ZMResult<Integer> delRole(@RequestParam("id") Integer id) {
+    public ZMResult<Integer> delRole(@RequestParam("studentId") Integer studentId) {
         try {
             ZMResult<Integer> zmResult = new ZMResult<>(Message.SUCCESS);
-            zmResult.setData(studentService.deleteById(id));
+            zmResult.setData(studentService.deleteById(studentId));
             return zmResult;
         } catch (Exception e) {
             logger.error(e.getMessage());

@@ -2,6 +2,7 @@ package com.zm.service;
 
 import com.github.pagehelper.PageInfo;
 import com.zm.dto.*;
+import com.zm.entity.SysRole;
 
 import java.util.List;
 
@@ -53,5 +54,5 @@ public interface SysRoleService {
      * @return List<RoleRspDto>
      * @throws Exception
      */
-    List<RoleRspDto> getOption() throws Exception;
+    List<SysRole> getOption() throws Exception;
 }

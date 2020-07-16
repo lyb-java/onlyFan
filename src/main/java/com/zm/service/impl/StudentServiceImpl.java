@@ -65,7 +65,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public Integer update(Student c) throws ValidateException {
-        Student rspDto =  this.queryById(c.getId());
+        Student rspDto =  this.queryById(c.getStudentId());
         if(Objects.isNull(rspDto)){
             throw  new ValidateException("信息不存在！");
         }

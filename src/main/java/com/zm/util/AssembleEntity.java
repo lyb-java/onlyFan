@@ -14,7 +14,7 @@ public class AssembleEntity {
         Long time = DateUtils.getCurrentTimes();
         BeanUtils.copyProperties(source,target);
         targetClass.getMethod("setOpRoleName",String.class).invoke(target,userInfo.getRoleName());
-        targetClass.getMethod("setOpUserId",Integer.class).invoke(target,userInfo.getId());
+        targetClass.getMethod("setOpUserId",Integer.class).invoke(target,userInfo.getUserId());
         targetClass.getMethod("setOpUserName",String.class).invoke(target,userInfo.getUserName());
         targetClass.getMethod("setCreateTime",Long.class).invoke(target, time);
         targetClass.getMethod("setUpdateTime",Long.class).invoke(target, time);

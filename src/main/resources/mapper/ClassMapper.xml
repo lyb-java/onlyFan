@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.zm.mapper.ClassMapper" >
   <resultMap id="BaseResultMap" type="com.zm.entity.Class" >
-    <id column="id" property="id" jdbcType="INTEGER" />
+    <id column="class_id" property="classId" jdbcType="INTEGER" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="class_size" property="classSize" jdbcType="BIGINT" />
     <result column="is_delete" property="isDelete" jdbcType="VARCHAR" />
@@ -13,26 +13,26 @@
     <result column="op_role_name" property="opRoleName" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, name, class_size, is_delete, create_time, update_time, op_user_id, op_user_name, 
+    class_id, name, class_size, is_delete, create_time, update_time, op_user_id, op_user_name,
     op_role_name
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from zm_class
-    where id = #{id,jdbcType=INTEGER}
+    where class_id = #{classId,jdbcType=INTEGER}
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     update  zm_class set is_delete = 1
-    where id = #{id,jdbcType=INTEGER}
+    where class_id = #{classId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.zm.entity.Class" >
-    insert into zm_class (id, name, class_size, 
+    insert into zm_class (class_id, name, class_size,
       is_delete, create_time, update_time, 
       op_user_id, op_user_name, op_role_name
       )
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{classSize,jdbcType=BIGINT}, 
+    values (#{classId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{classSize,jdbcType=BIGINT},
       #{isDelete,jdbcType=VARCHAR}, #{createTime,jdbcType=BIGINT}, #{updateTime,jdbcType=BIGINT}, 
       #{opUserId,jdbcType=INTEGER}, #{opUserName,jdbcType=VARCHAR}, #{opRoleName,jdbcType=VARCHAR}
       )
@@ -40,8 +40,8 @@
   <insert id="insertSelective" parameterType="com.zm.entity.Class" >
     insert into zm_class
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
+      <if test="classId != null" >
+        class_id,
       </if>
       <if test="name != null" >
         name,
@@ -69,8 +69,8 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
+      <if test="classId != null" >
+        #{classId,jdbcType=INTEGER},
       </if>
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
@@ -126,7 +126,7 @@
         op_role_name = #{opRoleName,jdbcType=VARCHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where class_id = #{classId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.zm.entity.Class" >
     update zm_class
@@ -138,7 +138,7 @@
       op_user_id = #{opUserId,jdbcType=INTEGER},
       op_user_name = #{opUserName,jdbcType=VARCHAR},
       op_role_name = #{opRoleName,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
+    where class_id = #{classId,jdbcType=INTEGER}
   </update>
   <select id="getAllPage" resultType="com.zm.entity.Class">
     select

@@ -81,10 +81,10 @@ public class AchievementController extends BaseController{
      */
     @ApiOperation(value = "查询后台学生成绩详情")
     @PostMapping("/getdetail")
-    public ZMResult<Achievement> getDetail(@RequestParam("id") Integer id) {
+    public ZMResult<Achievement> getDetail(@RequestParam("achievementId") Integer achievementId) {
         try {
             ZMResult<Achievement> zmResult = new ZMResult<>(Message.SUCCESS);
-            zmResult.setData(achievementService.queryById(id));
+            zmResult.setData(achievementService.queryById(achievementId));
             return zmResult;
         } catch (Exception e) {
             logger.error(e.getMessage());
@@ -119,10 +119,10 @@ public class AchievementController extends BaseController{
      */
     @ApiOperation(value = "学生成绩删除")
     @PostMapping("/delete")
-    public ZMResult<Integer> delRole(@RequestParam("id") Integer id) {
+    public ZMResult<Integer> delRole(@RequestParam("achievementId") Integer achievementId) {
         try {
             ZMResult<Integer> zmResult = new ZMResult<>(Message.SUCCESS);
-            zmResult.setData(achievementService.deleteById(id));
+            zmResult.setData(achievementService.deleteById(achievementId));
             return zmResult;
         } catch (Exception e) {
             logger.error(e.getMessage());

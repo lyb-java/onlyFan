@@ -65,7 +65,7 @@ public class CourseServiceImpl implements CourseService {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public Integer update(Course c) throws ValidateException {
-        Course rspDto =  this.queryById(c.getId());
+        Course rspDto =  this.queryById(c.getClassId());
         if(Objects.isNull(rspDto)){
             throw  new ValidateException("信息不存在！");
         }

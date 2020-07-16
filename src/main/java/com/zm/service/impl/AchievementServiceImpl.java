@@ -68,7 +68,7 @@ public class AchievementServiceImpl implements AchievementService {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public Integer update(Achievement achievement) throws ValidateException {
-        Achievement rspDto =  this.queryById(achievement.getId());
+        Achievement rspDto =  this.queryById(achievement.getAchievementId());
         if(Objects.isNull(rspDto)){
             throw  new ValidateException("成绩信息不存在！");
         }

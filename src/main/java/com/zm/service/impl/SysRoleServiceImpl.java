@@ -80,8 +80,8 @@ public class SysRoleServiceImpl implements SysRoleService {
     }
 
     @Override
-    public List<RoleRspDto> getOption() throws Exception {
-        List<RoleRspDto> roleRspDtos = sysRoleMapper.getAllOption();
+    public List<SysRole> getOption() throws Exception {
+        List<SysRole> roleRspDtos = sysRoleMapper.getAllOption();
         return roleRspDtos;
     }
 }

@@ -47,7 +47,7 @@ public class SysUserServiceImpl implements SysUserService {
         if(Constant.IS_ENABLE_NO.equals(sysUser.getIsEnable())){
             throw new ValidateException("账号已失效，请联系管理员李霞！");
         }
-        Integer userId =user.getId();
+        Integer userId =user.getUserId();
         String jsonUser = JSON.toJSONString(user);
         //生成token
         String token="";
@@ -78,8 +78,9 @@ public class SysUserServiceImpl implements SysUserService {
         Integer result = sysUserMapper.insert(user);
         //系统角色
         SysUserRole userRole = new SysUserRole();
-        userRole.setUserId(user.getId());
-        userRole.setRoleId(1);
+        String [] role = reqDto.getRoleName().split("@_@");
+        userRole.setUserId(user.getUserId());
+        userRole.setRoleId(Integer.parseInt(role[0]));
         //设置创建时间，修改时间
         userRole.setCreateTime(time);
         userRole.setUpdateTime(time);
@@ -108,6 +109,8 @@ public class SysUserServiceImpl implements SysUserService {
 
     @Override
     public Integer editUser(UserReqDto reqDto) throws Exception {
+         String [] role  = reqDto.getRoleName().split("@_@");
+        reqDto.setRoleId(Integer.parseInt(role[0]));
         return sysUserMapper.updateByPrimaryKeySelective(reqDto);
     }
 

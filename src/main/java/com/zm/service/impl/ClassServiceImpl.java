@@ -67,7 +67,7 @@ public class ClassServiceImpl implements ClassService {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public Integer update(Class c) throws ValidateException {
-        Class rspDto =  this.queryById(c.getId());
+        Class rspDto =  this.queryById(c.getClassId());
         if(Objects.isNull(rspDto)){
             throw  new ValidateException("班级信息不存在！");
         }
