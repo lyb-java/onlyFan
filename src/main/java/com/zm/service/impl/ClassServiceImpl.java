@@ -14,6 +14,8 @@ import com.zm.mapper.ClassMapper;
 import com.zm.service.ClassService;
 import com.zm.util.AssembleEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -48,6 +50,7 @@ public class ClassServiceImpl implements ClassService {
      * @return 实例对象
      */
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public Integer insert(ClassReqDto reqDto, AccountDetailsDto userInfo) throws Exception {
         //赋值
         Class c = (Class) AssembleEntity.assembleEntityByClass(reqDto,Class.class,userInfo);
@@ -62,6 +65,7 @@ public class ClassServiceImpl implements ClassService {
      * @return 实例对象
      */
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public Integer update(Class c) throws ValidateException {
         Class rspDto =  this.queryById(c.getId());
         if(Objects.isNull(rspDto)){
@@ -93,5 +97,11 @@ public class ClassServiceImpl implements ClassService {
         pageInfo.setTotal(rspDtos.size());
         pageInfo.setList(rspDtos);
         return pageInfo;
+    }
+
+    @Override
+    public List<Class> getAllOption() {
+        List<Class> classList = classMapper.getAllOption();
+        return classList;
     }
 }

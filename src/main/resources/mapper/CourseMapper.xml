@@ -28,8 +28,9 @@
     from zm_course
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from zm_course
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    update   zm_course set is_delete = 1
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.zm.entity.Course" >
@@ -209,4 +210,30 @@
       op_role_name = #{opRoleName,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="getAllPage" resultType="com.zm.entity.Course">
+    select
+    <include refid="Base_Column_List" />
+    from zm_course
+    <where>
+      and is_delete = 0
+      <if test="className!=null and className !=''">
+        and class_name like CONCAT('%',#{className},'%')
+      </if>
+      <if test="teacherName!=null and teacherName !=''">
+        and teacher_name like CONCAT('%',#{teacherName},'%')
+      </if>
+      <if test="courseName!=null and courseName !=''">
+        and course_name like CONCAT('%',#{courseName},'%')
+      </if>
+      <if test="startTime!=null and startTime >0">
+        and start_time >= #{startTime}
+      </if>
+      <if test="endTime!=null and endTime >0">
+        and end_time &lt;= #{endTime}
+      </if>
+      <if test="isEffective!=null and isEffective !=''">
+        and is_effective = #{isEffective}
+      </if>
+    </where>
+  </select>
 </mapper>

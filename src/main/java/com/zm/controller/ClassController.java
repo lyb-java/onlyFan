@@ -3,11 +3,9 @@ package com.zm.controller;
 import com.github.pagehelper.PageInfo;
 import com.zm.common.Message;
 import com.zm.common.ZMResult;
-import com.zm.dto.AchievementReqDto;
 import com.zm.dto.ClassReqDto;
 import com.zm.dto.PageViewDto;
 import com.zm.dto.PageViewRspDto;
-import com.zm.entity.Achievement;
 import com.zm.entity.Class;
 import com.zm.service.ClassService;
 import io.swagger.annotations.Api;
@@ -134,6 +132,23 @@ public class ClassController extends BaseController{
         }
 
     }
+    /**
+     * 查询下拉列表
+     *
+     * @param
+     * @return ZMResult
+     */
+    @ApiOperation(value = "查询下拉列表")
+    @PostMapping("/getalloption")
+    public ZMResult<List<Class>> getAllOption() {
+        try {
+            ZMResult<List<Class>> zmResult = new ZMResult<>(Message.SUCCESS);
+            zmResult.setData(classService.getAllOption());
+            return zmResult;
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            return new ZMResult<>(e);
+        }
 
-
+    }
 }

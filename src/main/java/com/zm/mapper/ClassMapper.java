@@ -21,4 +21,6 @@ public interface ClassMapper {
     int updateByPrimaryKey(Class record);
 
     List<Class> getAllPage(ClassReqDto condition);
+
+    List<Class> getAllOption();
 }

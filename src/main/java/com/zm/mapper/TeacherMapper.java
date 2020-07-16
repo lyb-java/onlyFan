@@ -1,6 +1,9 @@
 package com.zm.mapper;
 
+import com.zm.dto.TeacherReqDto;
 import com.zm.entity.Teacher;
+
+import java.util.List;
 
 public interface TeacherMapper {
     int deleteByPrimaryKey(Integer id);
@@ -14,4 +17,8 @@ public interface TeacherMapper {
     int updateByPrimaryKeySelective(Teacher record);
 
     int updateByPrimaryKey(Teacher record);
+
+    List<Teacher> getAllPage(TeacherReqDto condition);
+
+    List<Teacher> getAllOption();
 }

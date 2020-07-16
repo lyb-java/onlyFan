@@ -29,7 +29,8 @@
     from zm_teacher
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from zm_teacher
     where id = #{id,jdbcType=INTEGER}
   </delete>
@@ -220,4 +221,35 @@
       op_role_name = #{opRoleName,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="getAllPage" resultType="com.zm.entity.Teacher">
+    select
+    <include refid="Base_Column_List" />
+    from zm_teacher
+    <where>
+      and is_delete = 0
+      <if test="teacherNo!=null and teacherNo !=''">
+        and teacher_no like CONCAT('%',#{teacherNo},'%')
+      </if>
+      <if test="name!=null and name !=''">
+        and name like CONCAT('%',#{name},'%')
+      </if>
+      <if test="gender!=null and gender !=''">
+        and gender = #{gender}
+      </if>
+      <if test="phone!=null and phone !=''">
+        and phone like CONCAT('%',#{phone},'%')
+      </if>
+      <if test="state!=null and state !=''">
+        and state = #{state}
+      </if>
+    </where>
+  </select>
+    <select id="getAllOption" resultType="com.zm.entity.Teacher">
+      select
+      <include refid="Base_Column_List" />
+      from zm_teacher
+      where
+       is_delete = 0
+       and state = 0
+    </select>
 </mapper>

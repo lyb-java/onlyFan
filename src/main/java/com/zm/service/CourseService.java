@@ -1,6 +1,14 @@
 package com.zm.service;
 
+import com.github.pagehelper.PageInfo;
+import com.zm.auth.AccountDetailsDto;
+import com.zm.dto.ClassReqDto;
+import com.zm.dto.CourseReqDto;
+import com.zm.dto.PageViewDto;
+import com.zm.entity.Class;
 import com.zm.entity.Course;
+import com.zm.exception.ValidateException;
+
 import java.util.List;
 
 /**
@@ -21,19 +29,20 @@ public interface CourseService {
 
     /**
      * 新增数据
-     *
-     * @param Course 实例对象
-     * @return 实例对象
+     * @param userInfo
+     * @param reqDto 实例对象
+     * @return 影响行数
      */
-    Course insert(Course Course);
+    Integer insert(CourseReqDto reqDto, AccountDetailsDto userInfo) throws Exception;
 
     /**
      * 修改数据
      *
-     * @param Course 实例对象
-     * @return 实例对象
+     * @param c 实例对象
+     * @return 影响行数
+     * @exception ValidateException 校验
      */
-    Course update(Course Course);
+    Integer update(Course c) throws ValidateException;
 
     /**
      * 通过主键删除数据
@@ -41,6 +50,14 @@ public interface CourseService {
      * @param id 主键
      * @return 是否成功
      */
-    boolean deleteById(Integer id);
+    Integer deleteById(Integer id);
+
+    /**
+     * 查询后台列表
+     *
+     * @param pageViewDto  查询条件
+     * @return PageInfo<Course> 分页列表对象
+     */
+    PageInfo<Course> getAllPage(PageViewDto<CourseReqDto> pageViewDto);
 
 }

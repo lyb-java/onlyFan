@@ -12,6 +12,8 @@ import com.zm.mapper.AchievementMapper;
 import com.zm.service.AchievementService;
 import com.zm.util.AssembleEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -46,6 +48,7 @@ public class AchievementServiceImpl implements AchievementService {
      * @return 实例对象
      */
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public Integer insert(AchievementReqDto reqDto, AccountDetailsDto userInfo) throws Exception {
         //赋值
         Achievement achievement = (Achievement)AssembleEntity.assembleEntityByClass(reqDto,Achievement.class,userInfo);
@@ -63,6 +66,7 @@ public class AchievementServiceImpl implements AchievementService {
      * @return 实例对象
      */
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public Integer update(Achievement achievement) throws ValidateException {
         Achievement rspDto =  this.queryById(achievement.getId());
         if(Objects.isNull(rspDto)){
@@ -79,6 +83,7 @@ public class AchievementServiceImpl implements AchievementService {
      * @return 是否成功
      */
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public Integer deleteById(Integer id) {
         return this.achievementMapper.deleteByPrimaryKey(id);
     }

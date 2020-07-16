@@ -145,7 +145,7 @@
     <include refid="Base_Column_List" />
     from zm_class
     <where>
-      and is_delete = 1
+      and is_delete = 0
       <if test="name!=null and name !=''">
         and name like CONCAT('%',#{name},'%')
       </if>
@@ -153,5 +153,12 @@
         and op_user_name like CONCAT('%',#{opUserName},'%')
       </if>
     </where>
+  </select>
+  <select id="getAllOption" resultType="com.zm.entity.Class">
+    select
+    <include refid="Base_Column_List" />
+    from zm_class
+    where
+     is_delete = 0
   </select>
 </mapper>

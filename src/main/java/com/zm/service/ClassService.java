@@ -53,11 +53,16 @@ public interface ClassService {
     Integer deleteById(Integer id);
 
     /**
-     * 查询后台学生成绩列表
+     * 查询后台列表
      *
      * @param pageViewDto  查询条件
      * @return PageInfo<Achievement> 分页列表对象
      */
     PageInfo<Class> getAllPage(PageViewDto<ClassReqDto> pageViewDto);
-
+    /**
+     * 查询后台列表
+     *
+     * @return List<Class> 列表对象
+     */
+    List<Class> getAllOption();
 }
