@@ -221,7 +221,7 @@
       op_role_name = #{opRoleName,jdbcType=VARCHAR}
     where student_id = #{studentId,jdbcType=INTEGER}
   </update>
-  <select id="getAllPage" resultType="com.zm.entity.Student">
+  <select id="getAllPage" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from zm_student
@@ -244,12 +244,22 @@
       </if>
     </where>
   </select>
-  <select id="getAllOption" resultType="com.zm.entity.Student">
+  <select id="getAllOption"  resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from zm_student
     where
      is_delete = 0
      and state = 0
+  </select>
+  <select id="selectByStudent"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from zm_student
+    where
+    is_delete = 0
+    and state = 0
+    and stu_no =#{stuNo}
+    and phone =#{phone}
   </select>
 </mapper>

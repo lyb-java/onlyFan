@@ -16,6 +16,8 @@
     <result column="access" property="access" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="userRspDtoMap"  extends="BaseResultMap"  type="com.zm.dto.UserRspDto" >
+    <result column="role_id" property="roleId" jdbcType="VARCHAR" />
+    <result column="role_name" property="roleName" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     u.user_id, u.account, u.user_name,password, u.is_enable, u.create_time, u.update_time,u.is_delete
@@ -25,7 +27,7 @@
     <include refid="Base_Column_List" />,r.role_name,r.access
     from zm_sys_user u
     LEFT JOIN zm_sys_user_role AS ur ON ur.user_id = u.user_id
-    LEFT JOIN zm_sys_role AS r ON r.id = ur.role_id
+    LEFT JOIN zm_sys_role AS r ON r.role_id = ur.role_id
     where u.account = #{account,jdbcType=VARCHAR}
     and u.password = #{password,jdbcType=VARCHAR}
     and u.is_delete = 0
@@ -33,16 +35,19 @@
   </select>
   <select id="selectByPrimaryKey" resultMap="userRspDtoMap" parameterType="java.lang.Integer" >
     select 
-    <include refid="Base_Column_List" />
+    <include refid="Base_Column_List" />,r.role_id,r.role_name
     from zm_sys_user u
+    LEFT JOIN zm_sys_user_role AS ur ON ur.user_id = u.user_id
+    LEFT JOIN zm_sys_role AS r ON r.role_id = ur.role_id
     where u.user_id = #{userId,jdbcType=INTEGER}
     and u.is_delete = 0
+    and r.is_delete = 0
   </select>
   <update id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     update  zm_sys_user set is_delete = 1
     where user_id = #{userId,jdbcType=INTEGER}
   </update>
-  <insert id="insert" parameterType="com.zm.entity.SysUser"  useGeneratedKeys="true"  keyProperty="id" keyColumn="id">
+  <insert id="insert" parameterType="com.zm.entity.SysUser"  useGeneratedKeys="true"  keyProperty="userId" keyColumn="user_id">
     insert into zm_sys_user (user_id, account, password,
       user_name, is_enable, create_time, 
       update_time,is_delete)
@@ -167,4 +172,14 @@
         and r.is_delete = 0
       </where>
     </select>
+  <select id="selectByAccount" resultType="com.zm.dto.UserSeachRspDto">
+    select
+    <include refid="Base_Column_List" />,r.role_name,r.access
+    from zm_sys_user u
+    LEFT JOIN zm_sys_user_role AS ur ON ur.user_id = u.user_id
+    LEFT JOIN zm_sys_role AS r ON r.role_id = ur.role_id
+    where u.account = #{account,jdbcType=VARCHAR}
+    and u.is_delete = 0
+    and r.is_delete = 0
+  </select>
 </mapper>

@@ -51,7 +51,11 @@ public class StudentServiceImpl implements StudentService {
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public Integer insert(StudentReqDto reqDto, AccountDetailsDto userInfo) throws Exception {
         //赋值
-        Student c = (Student) AssembleEntity.assembleEntityByClass(reqDto,Class.class,userInfo);
+        Student student = studentMapper.selectByStudent(reqDto);
+        if(Objects.nonNull(student)){
+            throw  new ValidateException("该学生已存在！");
+        }
+        Student c = (Student) AssembleEntity.assembleEntityByClass(reqDto,Student.class,userInfo);
         Integer result = this.studentMapper.insert(c);
         return result;
     }

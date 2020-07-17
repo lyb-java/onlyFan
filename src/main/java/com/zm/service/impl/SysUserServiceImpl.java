@@ -6,10 +6,12 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.zm.common.Constant;
 import com.zm.dto.*;
+import com.zm.entity.SysRole;
 import com.zm.entity.SysUser;
 import com.zm.entity.SysUserRole;
 import com.zm.exception.BusinessException;
 import com.zm.exception.ValidateException;
+import com.zm.mapper.SysRoleMapper;
 import com.zm.mapper.SysUserMapper;
 import com.zm.mapper.SysUserRoleMapper;
 import com.zm.service.SysUserService;
@@ -45,7 +47,7 @@ public class SysUserServiceImpl implements SysUserService {
         }
 //        是否有效（0否，1是）
         if(Constant.IS_ENABLE_NO.equals(sysUser.getIsEnable())){
-            throw new ValidateException("账号已失效，请联系管理员李霞！");
+            throw new ValidateException("账号已失效，请联系管理员！");
         }
         Integer userId =user.getUserId();
         String jsonUser = JSON.toJSONString(user);
@@ -66,7 +68,7 @@ public class SysUserServiceImpl implements SysUserService {
         BeanUtils.copyProperties(reqDto,user);
         //md5加密
         user.setPassword(Md5Util.md5(user.getPassword()));
-        UserSeachRspDto rspDto = sysUserMapper.selectByUser(user);
+        UserSeachRspDto rspDto = sysUserMapper.selectByAccount(user);
         if(Objects.nonNull(rspDto)){
             throw new BusinessException("账号已存在，不可重复添加！");
         }
@@ -78,9 +80,8 @@ public class SysUserServiceImpl implements SysUserService {
         Integer result = sysUserMapper.insert(user);
         //系统角色
         SysUserRole userRole = new SysUserRole();
-        String [] role = reqDto.getRoleName().split("@_@");
         userRole.setUserId(user.getUserId());
-        userRole.setRoleId(Integer.parseInt(role[0]));
+        userRole.setRoleId(reqDto.getRoleId());
         //设置创建时间，修改时间
         userRole.setCreateTime(time);
         userRole.setUpdateTime(time);
@@ -109,9 +110,17 @@ public class SysUserServiceImpl implements SysUserService {
 
     @Override
     public Integer editUser(UserReqDto reqDto) throws Exception {
-         String [] role  = reqDto.getRoleName().split("@_@");
-        reqDto.setRoleId(Integer.parseInt(role[0]));
-        return sysUserMapper.updateByPrimaryKeySelective(reqDto);
+        //获取角色名称
+//        SysRole role = sysRoleMapper.selectByPrimaryKey(reqDto.getRoleId());
+//        reqDto.setRoleName(role.getRoleName());
+        reqDto.setPassword(Md5Util.md5(reqDto.getPassword()));
+        sysUserMapper.updateByPrimaryKeySelective(reqDto);
+        SysUserRole userRole = new SysUserRole();
+        userRole.setUserId(reqDto.getUserId());
+        userRole.setRoleId(reqDto.getRoleId());
+        userRole.setUpdateTime(DateUtils.getCurrentTimes());
+        sysUserRoleMapper.updateByPrimaryKeySelective(userRole);
+        return 0;
     }
 
     @Override

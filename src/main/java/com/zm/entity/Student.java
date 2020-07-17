@@ -3,6 +3,7 @@ package com.zm.entity;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * 学生信息表(Student)实体类
@@ -36,7 +37,7 @@ public class Student implements Serializable {
     /**
     * 出生日期
     */
-    private Object birthday;
+    private Date birthday;
     /**
     * 手机号
     */
@@ -48,7 +49,7 @@ public class Student implements Serializable {
     /**
     * 入校时间
     */
-    private Object admissionDate;
+    private Date admissionDate;
     /**
     * 当前状态（0在校 1离校）
     */

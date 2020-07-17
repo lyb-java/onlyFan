@@ -14,13 +14,13 @@ import java.util.List;
  */
 @Repository
 public interface SysUserMapper {
-    int deleteByPrimaryKey(@Param("id") Integer id);
+    int deleteByPrimaryKey(@Param("userId") Integer userId);
 
     int insert(SysUser record);
 
     int insertSelective(SysUser record);
 
-    UserRspDto selectByPrimaryKey(@Param("id") Integer id);
+    UserRspDto selectByPrimaryKey(@Param("userId") Integer userId);
 
     int updateByPrimaryKeySelective(SysUser record);
 
@@ -41,4 +41,11 @@ public interface SysUserMapper {
      * @throws Exception 异常处理
      */
     List<UserSeachRspDto> getUserAllPage(@Param("condition") UserSeachReqDto reqDto) throws Exception;
+    /***
+     * 根据账号查询单个用户
+     * @param user 条件
+     * @return UserSeachRspDto  返回实体
+     * @throws Exception 异常处理
+     */
+    UserSeachRspDto selectByAccount(SysUser user) throws Exception;;
 }

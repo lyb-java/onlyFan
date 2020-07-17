@@ -25,4 +25,6 @@ public interface StudentMapper {
     List<Student> getAllPage(StudentReqDto condition);
 
     List<Student> getAllOption();
+
+    Student selectByStudent(StudentReqDto reqDto);
 }
