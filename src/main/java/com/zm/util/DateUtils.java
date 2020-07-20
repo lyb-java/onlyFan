@@ -1,6 +1,7 @@
 package com.zm.util;
 
 
+import com.zm.exception.ValidateException;
 import org.joda.time.DateTime;
 import org.springframework.util.StringUtils;
 
@@ -59,4 +60,29 @@ public class DateUtils {
 		DateTime dateTime = new DateTime(date);
 		return dateTime.toString(formatB);
 	}
+	/**
+	 * 字符串按格式转换成格式化时间
+	 *
+	 * @author liyangbin
+	 * @date 2020年7月12日
+	 * @param time 时间字符串
+	 * @param format 传入的时间字符串的格式
+	 * @return 返回yyyyMMddHHmmssSSS格式的时间字符串
+	 * @throws ValidateException
+	 */
+	public static String parseDate(String time, String format) throws ValidateException {
+		if (!StringUtils.hasLength(time)) {
+			return null;
+		}
+		SimpleDateFormat dateFormat = new SimpleDateFormat(format);
+		Date date = null;
+		try {
+			date = dateFormat.parse(time);
+		} catch (Exception e) {
+			throw new ValidateException("日期格式错误");
+		}
+		DateTime dateTime = new DateTime(date);
+		return dateTime.toString(DATATIME_FORMAT_YYYYMMDDHHMMSSSSS);
+	}
+
 }

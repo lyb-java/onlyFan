@@ -8,6 +8,9 @@
     <result column="create_time" property="createTime" jdbcType="BIGINT" />
     <result column="update_time" property="updateTime" jdbcType="BIGINT" />
   </resultMap>
+  <sql id="Base_Column_List" >
+    class_id, teacher_id, is_delete, create_time, update_time
+  </sql>
   <insert id="insert" parameterType="com.zm.entity.ClassRelationTeacher" >
     insert into zm_class_relation_teacher (class_id, teacher_id, is_delete, 
       create_time, update_time)
@@ -51,4 +54,12 @@
       </if>
     </trim>
   </insert>
+    <update id="updateByClassId">
+        update zm_class_relation_teacher set teacher_id=#{teacherId},update_time =#{updateTime}
+        where class_id = #{classId}
+    </update>
+  <select id="selectByTeacherId" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/> from zm_class_relation_teacher
+    where teacher_id = #{teacherId}  limit 1
+  </select>
 </mapper>

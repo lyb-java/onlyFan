@@ -7,9 +7,12 @@ import com.zm.auth.AccountDetailsDto;
 import com.zm.dto.PageViewDto;
 import com.zm.dto.StudentReqDto;
 import com.zm.dto.TeacherReqDto;
+import com.zm.dto.TeacherRspDto;
+import com.zm.entity.ClassRelationTeacher;
 import com.zm.entity.Student;
 import com.zm.entity.Teacher;
 import com.zm.exception.ValidateException;
+import com.zm.mapper.ClassRelationTeacherMapper;
 import com.zm.mapper.TeacherMapper;
 import com.zm.service.TeacherService;
 import com.zm.util.AssembleEntity;
@@ -31,7 +34,8 @@ import java.util.Objects;
 public class TeacherServiceImpl implements TeacherService {
     @Resource
     private TeacherMapper teacherMapper;
-
+    @Resource
+    private ClassRelationTeacherMapper classRelationTeacherMapper;
     /**
      * 通过ID查询单条数据
      *
@@ -39,7 +43,7 @@ public class TeacherServiceImpl implements TeacherService {
      * @return 实例对象
      */
     @Override
-    public Teacher queryById(Integer id) {
+    public TeacherRspDto queryById(Integer id) {
         return this.teacherMapper.selectByPrimaryKey(id);
     }
 
@@ -53,7 +57,7 @@ public class TeacherServiceImpl implements TeacherService {
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public Integer insert(TeacherReqDto reqDto, AccountDetailsDto userInfo) throws Exception {
         //赋值
-        Teacher c = (Teacher) AssembleEntity.assembleEntityByClass(reqDto,Class.class,userInfo);
+        Teacher c = (Teacher) AssembleEntity.assembleEntityByClass(reqDto,Teacher.class,userInfo);
         Integer result = this.teacherMapper.insert(c);
         return result;
     }
@@ -82,7 +86,12 @@ public class TeacherServiceImpl implements TeacherService {
      * @return 是否成功
      */
     @Override
-    public Integer deleteById(Integer id) {
+    public Integer deleteById(Integer id) throws ValidateException {
+        //教师下有班级 不允许删除
+        ClassRelationTeacher classRelationTeacher = classRelationTeacherMapper.selectByTeacherId(id);
+        if(Objects.nonNull(classRelationTeacher)){
+            throw new ValidateException("该教师已绑定班级，不允许删除！");
+        }
         return this.teacherMapper.deleteByPrimaryKey(id);
     }
 

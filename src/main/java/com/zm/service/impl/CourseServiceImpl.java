@@ -11,6 +11,8 @@ import com.zm.exception.ValidateException;
 import com.zm.mapper.CourseMapper;
 import com.zm.service.CourseService;
 import com.zm.util.AssembleEntity;
+import com.zm.util.DateUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -85,11 +87,23 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public PageInfo<Course> getAllPage(PageViewDto<CourseReqDto> pageViewDto) {
+    public PageInfo<Course> getAllPage(PageViewDto<CourseReqDto> pageViewDto) throws ValidateException {
+        CourseReqDto reqDto = new CourseReqDto();
         //分页参数
         Page<Course> page = PageHelper.startPage(pageViewDto.getPageIndex(), pageViewDto.getPageSize());
+
+        BeanUtils.copyProperties(pageViewDto.getCondition(), reqDto);
+        //时间格式调整
+        if (org.springframework.util.StringUtils.hasLength(reqDto.getCourseStartTime())) {
+            //设置开始时间
+            reqDto.setCourseStartTime(DateUtils.parseDate(reqDto.getCourseStartTime() + " 00:00:00", DateUtils.DATATIME_FORMAT_YYYYMMDDHHMMSS));
+        }
+        if (org.springframework.util.StringUtils.hasLength(reqDto.getCourseEndTime())) {
+            //设置结束时间
+            reqDto.setCourseEndTime(DateUtils.parseDate(reqDto.getCourseEndTime() + " 24:00:00", DateUtils.DATATIME_FORMAT_YYYYMMDDHHMMSS));
+        }
         //查询列表数据
-        List<Course> rspDtos = courseMapper.getAllPage(pageViewDto.getCondition());
+        List<Course> rspDtos = courseMapper.getAllPage(reqDto);
 
         PageInfo  pageInfo = page.toPageInfo();
         pageInfo.setTotal(rspDtos.size());

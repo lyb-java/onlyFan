@@ -13,5 +13,12 @@ import lombok.Data;
 @Data
 @ApiModel(value = "教师信息表响应Dto")
 public class TeacherRspDto extends Teacher {
-
+    /**
+     * 班级编号
+     */
+    private Integer classId;
+    /**
+     * 班级名称
+     */
+    private String className;
 }

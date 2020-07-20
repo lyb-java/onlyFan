@@ -5,6 +5,7 @@ import com.zm.auth.AccountDetailsDto;
 import com.zm.dto.CourseReqDto;
 import com.zm.dto.PageViewDto;
 import com.zm.dto.StudentReqDto;
+import com.zm.dto.StudentRspDto;
 import com.zm.entity.Course;
 import com.zm.entity.Student;
 import com.zm.exception.ValidateException;
@@ -25,7 +26,7 @@ public interface StudentService {
      * @param id 主键
      * @return 实例对象
      */
-    Student queryById(Integer id);
+    StudentRspDto queryById(Integer id);
 
     /**
      * 新增数据
@@ -38,10 +39,10 @@ public interface StudentService {
     /**
      * 修改数据
      *
-     * @param student 实例对象
+     * @param reqDto 实例对象
      * @return 影响行数
      */
-    Integer update(Student student) throws ValidateException;
+    Integer update(StudentReqDto reqDto) throws ValidateException;
 
     /**
      * 通过主键删除数据
@@ -57,7 +58,7 @@ public interface StudentService {
      * @param pageViewDto  查询条件
      * @return PageInfo<Student> 分页列表对象
      */
-    PageInfo<Student> getAllPage(PageViewDto<StudentReqDto> pageViewDto);
+    PageInfo<StudentRspDto> getAllPage(PageViewDto<StudentReqDto> pageViewDto);
     /**
      * 查询后台下拉列表
      *

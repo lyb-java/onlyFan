@@ -19,22 +19,29 @@
     <result column="op_user_name" property="opUserName" jdbcType="VARCHAR" />
     <result column="op_role_name" property="opRoleName" jdbcType="VARCHAR" />
   </resultMap>
+  <resultMap id="StudentRspMap" type="com.zm.dto.StudentRspDto" extends="BaseResultMap">
+    <result column="class_id" property="classId" jdbcType="INTEGER" />
+    <result column="class_name" property="className" jdbcType="VARCHAR" />
+  </resultMap>
   <sql id="Base_Column_List" >
-    student_id, stu_no, name, gender, age, birthday, phone, address, admission_date, state, is_delete,
-    create_time, update_time, op_user_id, op_user_name, op_role_name
+    zm_student.student_id, zm_student.stu_no, zm_student.name, zm_student.gender, zm_student.age, zm_student.birthday,
+     zm_student.phone, zm_student.address, zm_student.admission_date, zm_student.state, zm_student.is_delete,
+    zm_student.create_time, zm_student.update_time, zm_student.op_user_id, zm_student.op_user_name, zm_student.op_role_name
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from zm_student
-    where student_id = #{studentId,jdbcType=INTEGER}
+  <select id="selectByPrimaryKey" resultMap="StudentRspMap" parameterType="java.lang.Integer" >
+    select <include refid="Base_Column_List"/>,
+     cla.class_id,cla.name as class_name
+    from zm_student  left join zm_class_relation_student stuRela on zm_student.student_id = stuRela.student_id
+    left join zm_class cla on cla.class_id = stuRela.class_id
+    where zm_student.student_id = #{studentId,jdbcType=INTEGER}
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     update   zm_student set is_delete = 1
     where student_id = #{studentId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.zm.entity.Student" >
+  <insert id="insert" parameterType="com.zm.entity.Student" useGeneratedKeys="true" keyColumn="student_id"
+          keyProperty="studentId">
     insert into zm_student (student_id, stu_no, name,
       gender, age, birthday, 
       phone, address, admission_date, 
@@ -48,7 +55,8 @@
       #{updateTime,jdbcType=BIGINT}, #{opUserId,jdbcType=INTEGER}, #{opUserName,jdbcType=VARCHAR}, 
       #{opRoleName,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.zm.entity.Student" >
+  <insert id="insertSelective" parameterType="com.zm.entity.Student" useGeneratedKeys="true" keyColumn="student_id"
+          keyProperty="studentId">
     insert into zm_student
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="studentId != null" >
@@ -221,17 +229,18 @@
       op_role_name = #{opRoleName,jdbcType=VARCHAR}
     where student_id = #{studentId,jdbcType=INTEGER}
   </update>
-  <select id="getAllPage" resultMap="BaseResultMap">
+  <select id="getAllPage" resultMap="StudentRspMap" parameterType="com.zm.dto.StudentReqDto">
     select
-    <include refid="Base_Column_List" />
-    from zm_student
+    <include refid="Base_Column_List" />,cla.class_id,cla.name as class_name
+    from zm_student left join zm_class_relation_student stuRela on zm_student.student_id = stuRela.student_id
+    left join zm_class cla on cla.class_id = stuRela.class_id
     <where>
-      and is_delete = 0
+      and zm_student.is_delete = 0
       <if test="stuNo!=null and stuNo !=''">
-        and stu_no like CONCAT('%',#{stuNo},'%')
+        and zm_student.stu_no like CONCAT('%',#{stuNo},'%')
       </if>
       <if test="name!=null and name !=''">
-        and name like CONCAT('%',#{name},'%')
+        and zm_student.name like CONCAT('%',#{name},'%')
       </if>
       <if test="gender!=null and gender !=''">
         and gender = #{gender}
@@ -241,6 +250,9 @@
       </if>
       <if test="state!=null and state !=''">
         and state = #{state}
+      </if>
+      <if test="className!=null and className !=''">
+        and class_name like CONCAT('%',#{className},'%')
       </if>
     </where>
   </select>

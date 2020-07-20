@@ -58,6 +58,6 @@ public interface CourseService {
      * @param pageViewDto  查询条件
      * @return PageInfo<Course> 分页列表对象
      */
-    PageInfo<Course> getAllPage(PageViewDto<CourseReqDto> pageViewDto);
+    PageInfo<Course> getAllPage(PageViewDto<CourseReqDto> pageViewDto) throws ValidateException;
 
 }

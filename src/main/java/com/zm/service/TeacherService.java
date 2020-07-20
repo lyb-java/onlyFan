@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.zm.auth.AccountDetailsDto;
 import com.zm.dto.PageViewDto;
 import com.zm.dto.TeacherReqDto;
+import com.zm.dto.TeacherRspDto;
 import com.zm.entity.Teacher;
 import com.zm.exception.ValidateException;
 
@@ -22,7 +23,7 @@ public interface TeacherService {
      * @param id 主键
      * @return 实例对象
      */
-    Teacher queryById(Integer id);
+    TeacherRspDto queryById(Integer id);
 
     /**
      * 新增数据
@@ -46,7 +47,7 @@ public interface TeacherService {
      * @param id 主键
      * @return 是否成功
      */
-    Integer deleteById(Integer id);
+    Integer deleteById(Integer id) throws ValidateException;
 
     /**
      * 查询后台分页列表

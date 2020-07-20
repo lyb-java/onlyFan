@@ -6,11 +6,15 @@ import com.github.pagehelper.PageInfo;
 import com.zm.auth.AccountDetailsDto;
 import com.zm.dto.PageViewDto;
 import com.zm.dto.StudentReqDto;
+import com.zm.dto.StudentRspDto;
+import com.zm.entity.ClassRelationStudent;
 import com.zm.entity.Student;
 import com.zm.exception.ValidateException;
+import com.zm.mapper.ClassRelationStudentMapper;
 import com.zm.mapper.StudentMapper;
 import com.zm.service.StudentService;
 import com.zm.util.AssembleEntity;
+import com.zm.util.DateUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,7 +33,8 @@ import java.util.Objects;
 public class StudentServiceImpl implements StudentService {
     @Resource
     private StudentMapper studentMapper;
-
+    @Resource
+    private ClassRelationStudentMapper classRelationStudentMapper;
     /**
      * 通过ID查询单条数据
      *
@@ -37,7 +42,7 @@ public class StudentServiceImpl implements StudentService {
      * @return 实例对象
      */
     @Override
-    public Student queryById(Integer id) {
+    public StudentRspDto queryById(Integer id) {
         return this.studentMapper.selectByPrimaryKey(id);
     }
 
@@ -55,25 +60,41 @@ public class StudentServiceImpl implements StudentService {
         if(Objects.nonNull(student)){
             throw  new ValidateException("该学生已存在！");
         }
-        Student c = (Student) AssembleEntity.assembleEntityByClass(reqDto,Student.class,userInfo);
-        Integer result = this.studentMapper.insert(c);
+        Student stu = (Student) AssembleEntity.assembleEntityByClass(reqDto,Student.class,userInfo);
+        //添加学生
+        int result = this.studentMapper.insert(stu);
+        //添加学生关联班级
+        ClassRelationStudent classRelationStudent = new ClassRelationStudent();
+        classRelationStudent.setClassId(reqDto.getClassId());
+        classRelationStudent.setStudentId(stu.getStudentId());
+        classRelationStudent.setCreateTime(DateUtils.getCurrentTimes());
+        classRelationStudent.setUpdateTime(DateUtils.getCurrentTimes());
+        classRelationStudent.setIsDelete("0");
+        result+=classRelationStudentMapper.insert(classRelationStudent);
+
         return result;
     }
 
     /**
      * 修改数据
      *
-     * @param c 实例对象
+     * @param reqDto 实例对象
      * @return 实例对象
      */
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-    public Integer update(Student c) throws ValidateException {
-        Student rspDto =  this.queryById(c.getStudentId());
+    public Integer update(StudentReqDto reqDto) throws ValidateException {
+        Student rspDto =  this.queryById(reqDto.getStudentId());
         if(Objects.isNull(rspDto)){
             throw  new ValidateException("信息不存在！");
         }
-        Integer result =this.studentMapper.updateByPrimaryKeySelective(c);
+        Integer result =this.studentMapper.updateByPrimaryKeySelective(reqDto);
+        //修改学生关联班级表
+        ClassRelationStudent classRelationStudent = new ClassRelationStudent();
+        classRelationStudent.setClassId(reqDto.getClassId());
+        classRelationStudent.setStudentId(reqDto.getStudentId());
+        classRelationStudent.setUpdateTime(DateUtils.getCurrentTimes());
+        result+=classRelationStudentMapper.updateByStudentId(classRelationStudent);
         return result;
     }
 
@@ -85,15 +106,19 @@ public class StudentServiceImpl implements StudentService {
      */
     @Override
     public Integer deleteById(Integer id) {
-        return this.studentMapper.deleteByPrimaryKey(id);
+        //删除学生
+        Integer result = this.studentMapper.deleteByPrimaryKey(id);
+        //删除学生关联班级
+        result += this.classRelationStudentMapper.deleteByStudentId(id);
+        return result;
     }
 
     @Override
-    public PageInfo<Student> getAllPage(PageViewDto<StudentReqDto> pageViewDto) {
+    public PageInfo<StudentRspDto> getAllPage(PageViewDto<StudentReqDto> pageViewDto) {
         //分页参数
-        Page<Student> page = PageHelper.startPage(pageViewDto.getPageIndex(), pageViewDto.getPageSize());
+        Page<StudentRspDto> page = PageHelper.startPage(pageViewDto.getPageIndex(), pageViewDto.getPageSize());
         //查询列表数据
-        List<Student> rspDtos = studentMapper.getAllPage(pageViewDto.getCondition());
+        List<StudentRspDto> rspDtos = studentMapper.getAllPage(pageViewDto.getCondition());
 
         PageInfo  pageInfo = page.toPageInfo();
         pageInfo.setTotal(rspDtos.size());

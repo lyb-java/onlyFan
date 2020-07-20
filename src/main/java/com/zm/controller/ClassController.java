@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.zm.common.Message;
 import com.zm.common.ZMResult;
 import com.zm.dto.ClassReqDto;
+import com.zm.dto.ClassRspDto;
 import com.zm.dto.PageViewDto;
 import com.zm.dto.PageViewRspDto;
 import com.zm.entity.Class;
@@ -62,11 +63,11 @@ public class ClassController extends BaseController{
      */
     @ApiOperation(value = "查询后台列表")
     @PostMapping("/getallpage")
-    public ZMResult<PageViewRspDto<List<Class>>> getAllPage(@RequestBody PageViewDto<ClassReqDto> pageViewDto) {
+    public ZMResult<PageViewRspDto<List<ClassRspDto>>> getAllPage(@RequestBody PageViewDto<ClassReqDto> pageViewDto) {
         try {
-            ZMResult<PageViewRspDto<List<Class>>> zmResult = new ZMResult<>(Message.SUCCESS);
+            ZMResult<PageViewRspDto<List<ClassRspDto>>> zmResult = new ZMResult<>(Message.SUCCESS);
             //获取分页数据
-            PageInfo<Class> pageInfo = classService.getAllPage(pageViewDto);
+            PageInfo<ClassRspDto> pageInfo = classService.getAllPage(pageViewDto);
             zmResult.setData(new PageViewRspDto<>(pageInfo.getList(), pageInfo.getTotal()));
             return zmResult;
         } catch (Exception e) {
@@ -83,9 +84,9 @@ public class ClassController extends BaseController{
      */
     @ApiOperation(value = "查询详情")
     @PostMapping("/getdetail")
-    public ZMResult<Class> getDetail(@RequestParam("classId") Integer classId) {
+    public ZMResult<ClassRspDto> getDetail(@RequestParam("classId") Integer classId) {
         try {
-            ZMResult<Class> zmResult = new ZMResult<>(Message.SUCCESS);
+            ZMResult<ClassRspDto> zmResult = new ZMResult<>(Message.SUCCESS);
             zmResult.setData(classService.queryById(classId));
             return zmResult;
         } catch (Exception e) {
@@ -102,7 +103,7 @@ public class ClassController extends BaseController{
      */
     @ApiOperation(value = "修改")
     @PostMapping("/edit")
-    public ZMResult<Integer> edit(@RequestBody Class reqDto) {
+    public ZMResult<Integer> edit(@RequestBody ClassReqDto reqDto) {
         try {
             ZMResult<Integer> zmResult = new ZMResult<>(Message.SUCCESS);
             zmResult.setData(classService.update(reqDto));

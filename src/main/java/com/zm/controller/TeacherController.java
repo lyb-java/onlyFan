@@ -6,6 +6,7 @@ import com.zm.common.ZMResult;
 import com.zm.dto.PageViewDto;
 import com.zm.dto.PageViewRspDto;
 import com.zm.dto.TeacherReqDto;
+import com.zm.dto.TeacherRspDto;
 import com.zm.entity.Teacher;
 import com.zm.service.TeacherService;
 import io.swagger.annotations.Api;
@@ -83,9 +84,9 @@ public class TeacherController extends BaseController{
      */
     @ApiOperation(value = "查询详情")
     @PostMapping("/getdetail")
-    public ZMResult<Teacher> getDetail(@RequestParam("id") Integer id) {
+    public ZMResult<TeacherRspDto> getDetail(@RequestParam("teacherId") Integer id) {
         try {
-            ZMResult<Teacher> zmResult = new ZMResult<>(Message.SUCCESS);
+            ZMResult<TeacherRspDto> zmResult = new ZMResult<>(Message.SUCCESS);
             zmResult.setData(teacherService.queryById(id));
             return zmResult;
         } catch (Exception e) {
@@ -121,7 +122,7 @@ public class TeacherController extends BaseController{
      */
     @ApiOperation(value = "删除")
     @PostMapping("/delete")
-    public ZMResult<Integer> delRole(@RequestParam("id") Integer id) {
+    public ZMResult<Integer> delRole(@RequestParam("teacherId") Integer id) {
         try {
             ZMResult<Integer> zmResult = new ZMResult<>(Message.SUCCESS);
             zmResult.setData(teacherService.deleteById(id));

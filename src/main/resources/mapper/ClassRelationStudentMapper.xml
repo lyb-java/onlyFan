@@ -51,4 +51,18 @@
       </if>
     </trim>
   </insert>
+    <update id="updateByStudentId" parameterType="com.zm.entity.ClassRelationStudent">
+     update zm_class_relation_student set
+     class_id=#{classId},
+      update_time=#{updateTime}
+      where student_id = #{studentId}
+    </update>
+  <delete id="deleteByStudentId">
+    delete from zm_class_relation_student where student_id = #{studentId}
+  </delete>
+  <select id="getByClassId" resultType="java.lang.Integer">
+      select count(0) from zm_class_relation_student
+      where
+        class_id = #{classId}
+    </select>
 </mapper>
