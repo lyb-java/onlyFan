@@ -102,7 +102,7 @@ public class CourseController extends BaseController{
      */
     @ApiOperation(value = "修改")
     @PostMapping("/edit")
-    public ZMResult<Integer> edit(@RequestBody Course reqDto) {
+    public ZMResult<Integer> edit(@RequestBody CourseReqDto reqDto) {
         try {
             ZMResult<Integer> zmResult = new ZMResult<>(Message.SUCCESS);
             zmResult.setData(courseService.update(reqDto));

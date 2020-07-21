@@ -5,12 +5,14 @@ import com.zm.exception.ValidateException;
 import org.joda.time.DateTime;
 import org.springframework.util.StringUtils;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * @author liyangbin
@@ -21,6 +23,10 @@ public class DateUtils {
 
 
 	public static final String DATETIME_YYYYMMDD_HHMMSS = "yyyy年MM月dd日 HH:mm:ss";
+
+	public static final String DATETIMEYYYYMMDD_HHMMSS = "yyyy-MM-dd HH:mm:ss";
+
+	public static final String DATETIMEYYYYMMDD_HHMM = "yyyy-MM-dd HH:mm";
 	
 	public static final String DATATIME_FORMAT_YYYYMMDDHHMMSSSSS = "yyyyMMddHHmmssSSS";
 
@@ -85,4 +91,28 @@ public class DateUtils {
 		return dateTime.toString(DATATIME_FORMAT_YYYYMMDDHHMMSSSSS);
 	}
 
+	/**
+	 * 字串（UTC格式）转格式 yyyy-MM-dd HH:mm
+	 *
+	 * @param oldDate
+	 * @return 日期
+	 */
+	public static String UTCDateFormat(String oldDate) {
+		if(!oldDate.contains("Z")){
+			return  oldDate;
+		}
+		Date date1 = null;
+		DateFormat df2 = null;
+		try {
+			oldDate= oldDate.replace("Z", " UTC");
+			DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS Z");
+			Date date = df.parse(oldDate);
+			SimpleDateFormat df1 = new SimpleDateFormat ("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
+			date1 = df1.parse(date.toString());
+			df2 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return df2.format(date1);
+	}
 }

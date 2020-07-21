@@ -232,11 +232,12 @@
         and start_time >= #{courseStartTime}
       </if>
       <if test="courseEndTime!=null and courseEndTime >0">
-        and end_time &lt;= #{courseEndTime}
+        and start_time &lt;= #{courseEndTime}
       </if>
       <if test="isEffective!=null and isEffective !=''">
         and is_effective = #{isEffective}
       </if>
     </where>
+    order by update_time desc
   </select>
 </mapper>

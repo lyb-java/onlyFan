@@ -199,11 +199,11 @@
       <if test="subjectName!=null and subjectName != ''">
         and subject_name like CONCAT('%',#{subjectName},'%')
       </if>
-      <if test="startTime!=null and startTime != 0">
-        and start_time >= #{startTime,jdbcType=BIGINT}
+      <if test="startingTime!=null and startingTime != 0">
+        and start_time >= #{startingTime,jdbcType=BIGINT}
       </if>
-      <if test="endTime!=null and endTime != 0">
-        and end_time &lt;= #{endTime,jdbcType=BIGINT}
+      <if test="completionTime!=null and completionTime != 0">
+        and start_time &lt;= #{completionTime,jdbcType=BIGINT}
       </if>
     </where>
     order by update_time desc

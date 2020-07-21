@@ -171,6 +171,7 @@
         and u.is_delete = 0
         and r.is_delete = 0
       </where>
+      order by update_time desc
     </select>
   <select id="selectByAccount" resultType="com.zm.dto.UserSeachRspDto">
     select

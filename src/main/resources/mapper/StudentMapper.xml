@@ -255,6 +255,7 @@
         and class_name like CONCAT('%',#{className},'%')
       </if>
     </where>
+    order by update_time desc
   </select>
   <select id="getAllOption"  resultMap="BaseResultMap">
     select

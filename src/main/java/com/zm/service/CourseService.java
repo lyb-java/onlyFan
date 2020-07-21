@@ -42,7 +42,7 @@ public interface CourseService {
      * @return 影响行数
      * @exception ValidateException 校验
      */
-    Integer update(Course c) throws ValidateException;
+    Integer update(CourseReqDto c) throws ValidateException;
 
     /**
      * 通过主键删除数据

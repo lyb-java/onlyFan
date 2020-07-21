@@ -162,6 +162,7 @@
         and zm_class.op_user_name like CONCAT('%',#{opUserName},'%')
       </if>
     </where>
+    order by update_time desc
   </select>
   <select id="getAllOption"  resultMap="BaseResultMap">
     select

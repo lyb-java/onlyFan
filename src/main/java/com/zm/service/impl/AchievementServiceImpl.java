@@ -7,10 +7,14 @@ import com.zm.auth.AccountDetailsDto;
 import com.zm.dto.AchievementReqDto;
 import com.zm.dto.PageViewDto;
 import com.zm.entity.Achievement;
+import com.zm.entity.Student;
 import com.zm.exception.ValidateException;
 import com.zm.mapper.AchievementMapper;
+import com.zm.mapper.StudentMapper;
 import com.zm.service.AchievementService;
 import com.zm.util.AssembleEntity;
+import com.zm.util.DateUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,7 +33,8 @@ import java.util.Objects;
 public class AchievementServiceImpl implements AchievementService {
     @Resource
     private AchievementMapper achievementMapper;
-
+    @Resource
+    private StudentMapper studentMapper;
     /**
      * 通过ID查询单条数据
      *
@@ -52,9 +57,15 @@ public class AchievementServiceImpl implements AchievementService {
     public Integer insert(AchievementReqDto reqDto, AccountDetailsDto userInfo) throws Exception {
         //赋值
         Achievement achievement = (Achievement)AssembleEntity.assembleEntityByClass(reqDto,Achievement.class,userInfo);
-        //时间格式转换
-//        DateUtils.parseDate(reqDto.getStartingTime(),DateUtils.DATETIME_YYYYMMDD_HHMMSS,
-//                DateUtils.DATATIME_FORMAT_YYYYMMDDHHMMSSSSS);
+        //查询学生姓名
+        Student student = studentMapper.selectByPrimaryKey(achievement.getStudentId());
+        achievement.setStudentName(student.getName());
+        //时间格式转换  考试起始时间
+        String starTime = DateUtils.parseDate(reqDto.getStartingTime(),DateUtils.DATETIMEYYYYMMDD_HHMM);
+        String endTime = DateUtils.parseDate(reqDto.getCompletionTime(),DateUtils.DATETIMEYYYYMMDD_HHMM);
+        achievement.setStartTime(Long.parseLong(starTime));
+        achievement.setEndTime(Long.parseLong(endTime));
+
         Integer result = this.achievementMapper.insert(achievement);
         return result;
     }
@@ -89,11 +100,24 @@ public class AchievementServiceImpl implements AchievementService {
     }
 
     @Override
-    public PageInfo<Achievement> getAllPage(PageViewDto<AchievementReqDto> pageViewDto) {
+    public PageInfo<Achievement> getAllPage(PageViewDto<AchievementReqDto> pageViewDto) throws ValidateException {
+        AchievementReqDto reqDto = new AchievementReqDto();
         //分页参数
         Page<Achievement> page = PageHelper.startPage(pageViewDto.getPageIndex(), pageViewDto.getPageSize());
+        BeanUtils.copyProperties(pageViewDto.getCondition(), reqDto);
+        //考试时间
+        String startingTime = reqDto.getStartingTime();
+        //时间格式调整  当天数据
+        if (org.springframework.util.StringUtils.hasLength(startingTime)) {
+            //设置开始时间
+            reqDto.setStartingTime(DateUtils.parseDate(startingTime + " 00:00:00", DateUtils.DATETIMEYYYYMMDD_HHMMSS));
+        }
+        if (org.springframework.util.StringUtils.hasLength(startingTime)) {
+            //设置结束时间
+            reqDto.setCompletionTime(DateUtils.parseDate(startingTime + " 24:00:00", DateUtils.DATETIMEYYYYMMDD_HHMMSS));
+        }
         //查询列表数据
-        List<Achievement> rspDtos = achievementMapper.getAllPage(pageViewDto.getCondition());
+        List<Achievement> rspDtos = achievementMapper.getAllPage(reqDto);
 
         PageInfo  pageInfo = page.toPageInfo();
         pageInfo.setTotal(rspDtos.size());
