@@ -193,18 +193,27 @@
     from zm_achievement
     <where>
       and is_delete = 0
-      <if test="studentName!=null and studentName != ''">
-       and student_name like CONCAT('%',#{studentName},'%')
+      <if test="condition.studentName!=null and condition.studentName != ''">
+       and student_name like CONCAT('%',#{condition.studentName},'%')
       </if>
-      <if test="subjectName!=null and subjectName != ''">
-        and subject_name like CONCAT('%',#{subjectName},'%')
+      <if test="condition.subjectName!=null and condition.subjectName != ''">
+        and subject_name like CONCAT('%',#{condition.subjectName},'%')
       </if>
-      <if test="startingTime!=null and startingTime != 0">
-        and start_time >= #{startingTime,jdbcType=BIGINT}
+      <if test="condition.startingTime!=null and condition.startingTime != 0">
+        and start_time >= #{condition.startingTime,jdbcType=BIGINT}
       </if>
-      <if test="completionTime!=null and completionTime != 0">
-        and start_time &lt;= #{completionTime,jdbcType=BIGINT}
+      <if test="condition.completionTime!=null and condition.completionTime != 0">
+        and start_time &lt;= #{condition.completionTime,jdbcType=BIGINT}
       </if>
+--       权限控制 管理员查询所有  教师查询班级学生  学生查询自己
+      <choose>
+        <when test="condition.access=='admin_teacher'">
+          and subject_name like CONCAT('%',#{condition.subjectName},'%')
+        </when>
+        <when test="condition.access=='admin_student'">
+          and subject_name like CONCAT('%',#{condition.subjectName},'%')
+        </when>
+      </choose>
     </where>
     order by update_time desc
   </select>

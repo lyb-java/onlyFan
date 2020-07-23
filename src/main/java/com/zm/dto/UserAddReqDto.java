@@ -44,5 +44,10 @@ public class UserAddReqDto {
     @ApiModelProperty(value = "角色名称")
     private String roleName;
 
+    @ApiModelProperty(value = "教师编号")
+    private Integer teacherId;
+
+    @ApiModelProperty(value = "学生编号")
+    private Integer studentId;
 
 }

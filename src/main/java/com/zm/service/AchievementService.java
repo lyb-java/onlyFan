@@ -55,5 +55,5 @@ public interface AchievementService {
      * @param pageViewDto  查询条件
      * @return PageInfo<Achievement> 分页列表对象
      */
-    PageInfo<Achievement> getAllPage(PageViewDto<AchievementReqDto> pageViewDto) throws ValidateException;
+    PageInfo<Achievement> getAllPage(PageViewDto<AchievementReqDto> pageViewDto,AccountDetailsDto accountDetailsDto) throws ValidateException;
 }

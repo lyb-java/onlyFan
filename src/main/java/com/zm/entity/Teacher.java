@@ -23,6 +23,10 @@ public class Teacher implements Serializable {
     */
     private String teacherNo;
     /**
+     * 用户编号
+     */
+    private Integer userId;
+    /**
     * 姓名
     */
     private String name;

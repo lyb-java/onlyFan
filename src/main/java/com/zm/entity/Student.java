@@ -27,6 +27,11 @@ public class Student implements Serializable {
     */
     private String name;
     /**
+     * 用户编号
+     */
+    private Integer userId;
+
+    /**
     * 性别(0男 1女)
     */
     private String gender;

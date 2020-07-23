@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.zm.entity.Student" >
     <id column="student_id" property="studentId" jdbcType="INTEGER" />
     <result column="stu_no" property="stuNo" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="gender" property="gender" jdbcType="VARCHAR" />
     <result column="age" property="age" jdbcType="INTEGER" />
@@ -24,7 +25,7 @@
     <result column="class_name" property="className" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    zm_student.student_id, zm_student.stu_no, zm_student.name, zm_student.gender, zm_student.age, zm_student.birthday,
+    zm_student.student_id, zm_student.stu_no, zm_student.name,zm_student.user_id, zm_student.gender, zm_student.age, zm_student.birthday,
      zm_student.phone, zm_student.address, zm_student.admission_date, zm_student.state, zm_student.is_delete,
     zm_student.create_time, zm_student.update_time, zm_student.op_user_id, zm_student.op_user_name, zm_student.op_role_name
   </sql>
@@ -42,14 +43,14 @@
   </delete>
   <insert id="insert" parameterType="com.zm.entity.Student" useGeneratedKeys="true" keyColumn="student_id"
           keyProperty="studentId">
-    insert into zm_student (student_id, stu_no, name,
+    insert into zm_student (student_id, stu_no, name,user_id,
       gender, age, birthday, 
       phone, address, admission_date, 
       state, is_delete, create_time, 
       update_time, op_user_id, op_user_name, 
       op_role_name)
     values (#{studentId,jdbcType=INTEGER}, #{stuNo,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
-      #{gender,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, #{birthday,jdbcType=DATE}, 
+      #{userId,jdbcType=INTEGER},#{gender,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, #{birthday,jdbcType=DATE},
       #{phone,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{admissionDate,jdbcType=DATE}, 
       #{state,jdbcType=VARCHAR}, #{isDelete,jdbcType=VARCHAR}, #{createTime,jdbcType=BIGINT}, 
       #{updateTime,jdbcType=BIGINT}, #{opUserId,jdbcType=INTEGER}, #{opUserName,jdbcType=VARCHAR}, 
@@ -67,6 +68,9 @@
       </if>
       <if test="name != null" >
         name,
+      </if>
+      <if test="userId != null" >
+        user_id,
       </if>
       <if test="gender != null" >
         gender,
@@ -118,6 +122,9 @@
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
       </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
       <if test="gender != null" >
         #{gender,jdbcType=VARCHAR},
       </if>
@@ -168,6 +175,9 @@
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
       </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
       <if test="gender != null" >
         gender = #{gender,jdbcType=VARCHAR},
       </if>
@@ -214,6 +224,7 @@
     update zm_student
     set stu_no = #{stuNo,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
       gender = #{gender,jdbcType=VARCHAR},
       age = #{age,jdbcType=INTEGER},
       birthday = #{birthday,jdbcType=DATE},

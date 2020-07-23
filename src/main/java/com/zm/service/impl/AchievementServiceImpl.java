@@ -4,6 +4,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.zm.auth.AccountDetailsDto;
+import com.zm.common.Constant;
 import com.zm.dto.AchievementReqDto;
 import com.zm.dto.PageViewDto;
 import com.zm.entity.Achievement;
@@ -100,7 +101,7 @@ public class AchievementServiceImpl implements AchievementService {
     }
 
     @Override
-    public PageInfo<Achievement> getAllPage(PageViewDto<AchievementReqDto> pageViewDto) throws ValidateException {
+    public PageInfo<Achievement> getAllPage(PageViewDto<AchievementReqDto> pageViewDto,AccountDetailsDto userInfo) throws ValidateException {
         AchievementReqDto reqDto = new AchievementReqDto();
         //分页参数
         Page<Achievement> page = PageHelper.startPage(pageViewDto.getPageIndex(), pageViewDto.getPageSize());
@@ -117,7 +118,7 @@ public class AchievementServiceImpl implements AchievementService {
             reqDto.setCompletionTime(DateUtils.parseDate(startingTime + " 24:00:00", DateUtils.DATETIMEYYYYMMDD_HHMMSS));
         }
         //查询列表数据
-        List<Achievement> rspDtos = achievementMapper.getAllPage(reqDto);
+        List<Achievement> rspDtos = achievementMapper.getAllPage(reqDto,userInfo);
 
         PageInfo  pageInfo = page.toPageInfo();
         pageInfo.setTotal(rspDtos.size());

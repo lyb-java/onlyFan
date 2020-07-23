@@ -6,14 +6,10 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.zm.common.Constant;
 import com.zm.dto.*;
-import com.zm.entity.SysRole;
-import com.zm.entity.SysUser;
-import com.zm.entity.SysUserRole;
+import com.zm.entity.*;
 import com.zm.exception.BusinessException;
 import com.zm.exception.ValidateException;
-import com.zm.mapper.SysRoleMapper;
-import com.zm.mapper.SysUserMapper;
-import com.zm.mapper.SysUserRoleMapper;
+import com.zm.mapper.*;
 import com.zm.service.SysUserService;
 import com.zm.util.DateUtils;
 import com.zm.util.JwtUtil;
@@ -34,9 +30,13 @@ import java.util.Objects;
 @Service
 public class SysUserServiceImpl implements SysUserService {
     @Resource
-    SysUserMapper sysUserMapper;
+    private SysUserMapper sysUserMapper;
     @Resource
-    SysUserRoleMapper sysUserRoleMapper;
+    private SysUserRoleMapper sysUserRoleMapper;
+    @Resource
+    private TeacherMapper teacherMapper;
+    @Resource
+    private StudentMapper studentMapper;
     @Override
     public UserSeachRspDto login(SysUser sysUser) throws Exception {
         //md5加密
@@ -49,6 +49,9 @@ public class SysUserServiceImpl implements SysUserService {
         if(Constant.IS_ENABLE_NO.equals(sysUser.getIsEnable())){
             throw new ValidateException("账号已失效，请联系管理员！");
         }
+        //查询教师信息
+//        teacherMapper.selectByPrimaryKey();
+        //查询学生信息
         Integer userId =user.getUserId();
         String jsonUser = JSON.toJSONString(user);
         //生成token
@@ -87,6 +90,22 @@ public class SysUserServiceImpl implements SysUserService {
         userRole.setUpdateTime(time);
 
         result += sysUserRoleMapper.insert(userRole);
+
+        //用户关联教师
+        if(reqDto.getTeacherId() !=null &&  reqDto.getTeacherId() > 0){
+            Teacher teacher = new Teacher();
+            teacher.setTeacherId(reqDto.getTeacherId());
+            teacher.setUserId(user.getUserId());
+            result +=teacherMapper.updateByPrimaryKeySelective(teacher);
+        }
+        //学生
+        if(reqDto.getStudentId() !=null && reqDto.getStudentId() > 0){
+            Student student = new Student();
+            student.setStudentId(reqDto.getStudentId());
+            student.setUserId(user.getUserId());
+            result +=studentMapper.updateByPrimaryKeySelective(student);
+        }
+
         return result;
     }
 

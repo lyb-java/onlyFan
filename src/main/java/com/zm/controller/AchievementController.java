@@ -64,7 +64,7 @@ public class AchievementController extends BaseController{
         try {
             ZMResult<PageViewRspDto<List<Achievement>>> zmResult = new ZMResult<>(Message.SUCCESS);
             //获取分页数据
-            PageInfo<Achievement> pageInfo = achievementService.getAllPage(pageViewDto);
+            PageInfo<Achievement> pageInfo = achievementService.getAllPage(pageViewDto,super.getUserInfo());
             zmResult.setData(new PageViewRspDto<>(pageInfo.getList(), pageInfo.getTotal()));
             return zmResult;
         } catch (Exception e) {

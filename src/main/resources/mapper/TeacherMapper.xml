@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.zm.entity.Teacher" >
     <id column="teacher_id" property="teacherId" jdbcType="INTEGER" />
     <result column="teacher_no" property="teacherNo" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="gender" property="gender" jdbcType="VARCHAR" />
     <result column="age" property="age" jdbcType="INTEGER" />
@@ -24,12 +25,12 @@
     <result column="class_name" property="className" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    teacher_id, teacher_no, name, gender, age, birthday, phone, address, admission_date, state,
+    teacher_id, teacher_no, user_id,name, gender, age, birthday, phone, address, admission_date, state,
     is_delete, create_time, update_time, op_user_id, op_user_name, op_role_name
   </sql>
   <select id="selectByPrimaryKey" resultMap="TeacherRspMap" parameterType="java.lang.Integer" >
     select 
-        teacher.teacher_id, teacher.teacher_no, teacher.name, teacher.gender, teacher.age, teacher.birthday,
+        teacher.teacher_id, teacher.teacher_no,teacher.user_id, teacher.name, teacher.gender, teacher.age, teacher.birthday,
         teacher.phone, teacher.address, teacher.admission_date, teacher.state,teacher.is_delete, teacher.create_time,
          teacher.update_time, teacher.op_user_id, teacher.op_user_name, teacher.op_role_name,
          cla.class_id,cla.name as class_name
@@ -39,18 +40,18 @@
   </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from zm_teacher
+    update  zm_teacher set is_delete = 1
     where teacher_id = #{teacherId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.zm.entity.Teacher" useGeneratedKeys="true" keyColumn="teacher_id"
           keyProperty="teacherId">
-    insert into zm_teacher (teacher_id, teacher_no, name,
+    insert into zm_teacher (teacher_id, teacher_no,user_id, name,
       gender, age, birthday, 
       phone, address, admission_date, 
       state, is_delete, create_time, 
       update_time, op_user_id, op_user_name, 
       op_role_name)
-    values (#{teacherId,jdbcType=INTEGER}, #{teacherNo,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+    values (#{teacherId,jdbcType=INTEGER}, #{teacherNo,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER},#{name,jdbcType=VARCHAR},
       #{gender,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, #{birthday,jdbcType=DATE}, 
       #{phone,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{admissionDate,jdbcType=DATE}, 
       #{state,jdbcType=VARCHAR}, #{isDelete,jdbcType=VARCHAR}, #{createTime,jdbcType=BIGINT}, 
@@ -66,6 +67,9 @@
       </if>
       <if test="teacherNo != null" >
         teacher_no,
+      </if>
+      <if test="userId != null" >
+        user_id,
       </if>
       <if test="name != null" >
         name,
@@ -117,6 +121,9 @@
       <if test="teacherNo != null" >
         #{teacherNo,jdbcType=VARCHAR},
       </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
       </if>
@@ -167,6 +174,9 @@
       <if test="teacherNo != null" >
         teacher_no = #{teacherNo,jdbcType=VARCHAR},
       </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
       </if>
@@ -215,6 +225,7 @@
   <update id="updateByPrimaryKey" parameterType="com.zm.entity.Teacher" >
     update zm_teacher
     set teacher_no = #{teacherNo,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
       gender = #{gender,jdbcType=VARCHAR},
       age = #{age,jdbcType=INTEGER},

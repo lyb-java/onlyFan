@@ -1,5 +1,6 @@
 package com.zm.mapper;
 
+import com.zm.auth.AccountDetailsDto;
 import com.zm.dto.AchievementReqDto;
 import com.zm.entity.Achievement;
 import org.apache.ibatis.annotations.Param;
@@ -22,5 +23,5 @@ public interface AchievementMapper {
 
     int updateByPrimaryKey(Achievement record);
 
-    List<Achievement> getAllPage(AchievementReqDto condition);
+    List<Achievement> getAllPage(@Param("condition") AchievementReqDto condition, @Param("userInfo") AccountDetailsDto userInfo);
 }
