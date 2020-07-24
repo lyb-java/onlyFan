@@ -112,4 +112,9 @@ public class TeacherServiceImpl implements TeacherService {
     public List<Teacher> getAllOption() {
         return teacherMapper.getAllOption();
     }
+
+    @Override
+    public List<Teacher> getOptionNoUserId() {
+        return teacherMapper.getOptionNoUserId();
+    }
 }

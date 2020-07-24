@@ -153,4 +153,23 @@ public class StudentController extends BaseController{
         }
 
     }
+    /**
+     * 查询下拉列表   排除已存在userid的学生
+     *
+     * @param
+     * @return ZMResult
+     */
+    @ApiOperation(value = "查询下拉列表")
+    @PostMapping("/getoptionnouserid")
+    public ZMResult<List<Student>> getOptionNoUserId() {
+        try {
+            ZMResult<List<Student>> zmResult = new ZMResult<>(Message.SUCCESS);
+            zmResult.setData(studentService.getOptionNoUserId());
+            return zmResult;
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            return new ZMResult<>(e);
+        }
+
+    }
 }

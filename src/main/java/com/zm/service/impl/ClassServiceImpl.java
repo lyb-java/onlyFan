@@ -129,11 +129,11 @@ public class ClassServiceImpl implements ClassService {
     }
 
     @Override
-    public PageInfo<ClassRspDto> getAllPage(PageViewDto<ClassReqDto> pageViewDto) {
+    public PageInfo<ClassRspDto> getAllPage(PageViewDto<ClassReqDto> pageViewDto,AccountDetailsDto userInfo ) {
         //分页参数
         Page<ClassRspDto> page = PageHelper.startPage(pageViewDto.getPageIndex(), pageViewDto.getPageSize());
         //查询列表数据
-        List<ClassRspDto> rspDtos = classMapper.getAllPage(pageViewDto.getCondition());
+        List<ClassRspDto> rspDtos = classMapper.getAllPage(pageViewDto.getCondition(),userInfo);
 
         PageInfo  pageInfo = page.toPageInfo();
         pageInfo.setTotal(rspDtos.size());

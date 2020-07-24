@@ -207,11 +207,14 @@
       </if>
 --       权限控制 管理员查询所有  教师查询班级学生  学生查询自己
       <choose>
-        <when test="condition.access=='admin_teacher'">
-          and subject_name like CONCAT('%',#{condition.subjectName},'%')
+        <when test="userInfo.access eq 'admin_teacher'">
+          and student_id in (select stuRela.student_id from zm_class_relation_student stuRela,zm_class_relation_teacher teaRela
+          where teaRela.class_id = stuRela.class_id and teaRela.teacher_id in (
+          select teacher_id from zm_teacher teac where teac.user_id=#{userInfo.userId}
+          ))
         </when>
-        <when test="condition.access=='admin_student'">
-          and subject_name like CONCAT('%',#{condition.subjectName},'%')
+        <when test="userInfo.access eq 'admin_student'">
+          and student_id in (select student_id from zm_student stu where stu.user_id=#{userInfo.userId})
         </when>
       </choose>
     </where>

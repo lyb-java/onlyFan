@@ -152,4 +152,23 @@ public class TeacherController extends BaseController{
         }
 
     }
+    /**
+     * 查询下拉列表  排除已分配账号的教师
+     *
+     * @param
+     * @return ZMResult
+     */
+    @ApiOperation(value = "查询下拉列表")
+    @PostMapping("/getoptionnouserid")
+    public ZMResult<List<Teacher>> getOptionNoUserId() {
+        try {
+            ZMResult<List<Teacher>> zmResult = new ZMResult<>(Message.SUCCESS);
+            zmResult.setData(teacherService.getOptionNoUserId());
+            return zmResult;
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            return new ZMResult<>(e);
+        }
+
+    }
 }

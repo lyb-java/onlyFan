@@ -66,4 +66,6 @@ public interface StudentService {
      * @return List<Student> 列表对象
      */
     List<Student> getAllOption();
+
+    List<Student> getOptionNoUserId();
 }

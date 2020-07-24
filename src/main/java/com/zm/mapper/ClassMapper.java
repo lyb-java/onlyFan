@@ -1,5 +1,6 @@
 package com.zm.mapper;
 
+import com.zm.auth.AccountDetailsDto;
 import com.zm.dto.ClassReqDto;
 import com.zm.dto.ClassRspDto;
 import com.zm.entity.Class;
@@ -23,7 +24,7 @@ public interface ClassMapper {
 
     int updateByPrimaryKey(Class record);
 
-    List<ClassRspDto> getAllPage(ClassReqDto condition);
+    List<ClassRspDto> getAllPage(@Param("condition") ClassReqDto condition, @Param("userInfo") AccountDetailsDto userInfo);
 
     List<Class> getAllOption();
 }

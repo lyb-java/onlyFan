@@ -59,7 +59,7 @@ public interface ClassService {
      * @param pageViewDto  查询条件
      * @return PageInfo<Achievement> 分页列表对象
      */
-    PageInfo<ClassRspDto> getAllPage(PageViewDto<ClassReqDto> pageViewDto);
+    PageInfo<ClassRspDto> getAllPage(PageViewDto<ClassReqDto> pageViewDto,AccountDetailsDto userInfo );
     /**
      * 查询后台列表
      *

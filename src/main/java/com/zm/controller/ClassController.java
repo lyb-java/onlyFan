@@ -1,6 +1,7 @@
 package com.zm.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.zm.auth.AccountDetailsDto;
 import com.zm.common.Message;
 import com.zm.common.ZMResult;
 import com.zm.dto.ClassReqDto;
@@ -65,9 +66,10 @@ public class ClassController extends BaseController{
     @PostMapping("/getallpage")
     public ZMResult<PageViewRspDto<List<ClassRspDto>>> getAllPage(@RequestBody PageViewDto<ClassReqDto> pageViewDto) {
         try {
+            AccountDetailsDto userInfo = super.getUserInfo();
             ZMResult<PageViewRspDto<List<ClassRspDto>>> zmResult = new ZMResult<>(Message.SUCCESS);
             //获取分页数据
-            PageInfo<ClassRspDto> pageInfo = classService.getAllPage(pageViewDto);
+            PageInfo<ClassRspDto> pageInfo = classService.getAllPage(pageViewDto,userInfo);
             zmResult.setData(new PageViewRspDto<>(pageInfo.getList(), pageInfo.getTotal()));
             return zmResult;
         } catch (Exception e) {

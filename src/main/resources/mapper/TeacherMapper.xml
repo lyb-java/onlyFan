@@ -274,4 +274,13 @@
        is_delete = 0
        and state = 0
     </select>
+    <select id="getOptionNoUserId" resultMap="BaseResultMap">
+      select
+      <include refid="Base_Column_List" />
+      from zm_teacher
+      where
+      is_delete = 0
+      and state = 0
+      and user_id is null
+    </select>
 </mapper>

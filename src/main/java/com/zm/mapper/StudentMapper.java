@@ -28,4 +28,6 @@ public interface StudentMapper {
     List<Student> getAllOption();
 
     Student selectByStudent(StudentReqDto reqDto);
+
+    List<Student> getOptionNoUserId();
 }

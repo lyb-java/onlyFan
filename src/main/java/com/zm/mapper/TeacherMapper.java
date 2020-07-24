@@ -23,4 +23,6 @@ public interface TeacherMapper {
     List<Teacher> getAllPage(TeacherReqDto condition);
 
     List<Teacher> getAllOption();
+
+    List<Teacher> getOptionNoUserId();
 }

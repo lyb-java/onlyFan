@@ -130,4 +130,9 @@ public class StudentServiceImpl implements StudentService {
     public List<Student> getAllOption() {
         return studentMapper.getAllOption();
     }
+
+    @Override
+    public List<Student> getOptionNoUserId() {
+        return studentMapper.getOptionNoUserId();
+    }
 }

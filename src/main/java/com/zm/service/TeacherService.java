@@ -62,4 +62,6 @@ public interface TeacherService {
      * @return List<Teacher> 分页列表对象
      */
     List<Teacher> getAllOption();
+
+    List<Teacher> getOptionNoUserId();
 }
