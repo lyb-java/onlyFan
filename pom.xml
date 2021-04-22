@@ -17,7 +17,7 @@
         <!-- spring版本号 方便在下面的依赖中进行引用-->
         <spring.version>4.3.5.RELEASE</spring.version>
         <!-- mybatis版本号 方便在下面的依赖中进行引用-->
-        <mybatis.version>3.4.1</mybatis.version>
+        <mybatis.version>3.5.6</mybatis.version>
     </properties>
     <repositories>
         <repository>
