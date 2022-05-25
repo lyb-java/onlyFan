@@ -15,7 +15,7 @@
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
         <!-- spring版本号 方便在下面的依赖中进行引用-->
-        <spring.version>4.3.5.RELEASE</spring.version>
+        <spring.version>5.2.22.RELEASE</spring.version>
         <!-- mybatis版本号 方便在下面的依赖中进行引用-->
         <mybatis.version>3.4.1</mybatis.version>
     </properties>
